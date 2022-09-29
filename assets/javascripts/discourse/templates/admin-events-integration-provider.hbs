@@ -1,0 +1,33 @@
+{{#events-integration-header view=view message=message}}
+  {{d-button
+    id="add-provider"
+    action=(action "addProvider")
+    label="admin.events_integration.provider.add.label"
+    title="admin.events_integration.provider.add.title"
+    icon="plus"}}
+{{/events-integration-header}}
+
+<div class="admin-events-integration-container">
+  {{#if hasProviders}}
+    <table>
+      <thead>
+        <tr>
+          <th>{{I18n "admin.events_integration.provider.name.label"}}</th>
+          <th>{{i18n "admin.events_integration.provider.provider_type.label"}}</th>
+          <th>{{I18n "admin.events_integration.provider.credentials"}}</th>
+          <th>{{i18n "admin.events_integration.provider.status"}}</th>
+          <th class="action-column">{{I18n "admin.events_integration.actions"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each providers as |provider|}}
+          {{events-integration-provider-row
+            provider=provider
+            removeProvider=(action "removeProvider")}}
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p>{{i18n "admin.events_integration.provider.none"}}</p>
+  {{/if}}
+</div>

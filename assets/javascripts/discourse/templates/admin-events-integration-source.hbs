@@ -1,0 +1,36 @@
+{{#events-integration-header view=view message=message}}
+  {{d-button
+    id="add-source"
+    action=(action "addSource")
+    label="admin.events_integration.source.add.label"
+    title="admin.events_integration.source.add.title"
+    icon="plus"}}
+{{/events-integration-header}}
+
+<div class="admin-events-integration-container">
+  {{#if hasSources}}
+    <table>
+      <thead>
+        <tr>
+          <th>{{I18n "admin.events_integration.source.name.label"}}</th>
+          <th>{{I18n "admin.events_integration.source.provider.label"}}</th>
+          <th>{{I18n "admin.events_integration.source.source_options.label"}}</th>
+          <th>{{I18n "admin.events_integration.source.date_range"}}</th>
+          <th class="action-column">{{I18n "admin.events_integration.actions"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each sources as |source|}}
+          {{events-integration-source-row
+            source=source
+            providers=providers
+            authTypes=authTypes
+            removeSource=(action "removeSource")
+            setMessage=(action "setMessage")}}
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p>{{i18n "admin.events_integration.source.none"}}</p>
+  {{/if}}
+</div>

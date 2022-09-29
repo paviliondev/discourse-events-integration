@@ -1,0 +1,261 @@
+.events-integration {
+  .controls.flex {
+    display: flex;
+    align-items: center;
+    min-height: 30px;
+  }
+
+  .admin-controls > nav > ul > li.settings {
+    margin-left: auto;
+  }
+}
+
+.admin-events-integration-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5em;
+
+  .buttons {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    .loading-container {
+      margin-right: 1em;
+    }
+
+    button {
+      input {
+        margin: 0 0.5em 0 0;
+      }
+    }
+  }
+}
+
+.admin-events-integration-container {
+  .select-kit,
+  .select-kit.category-chooser,
+  .select-kit.multi-select {
+    width: 180px;
+  }
+
+  input {
+    margin: 0;
+
+    &.small {
+      width: 150px;
+    }
+  }
+
+  .d-date-time-input-range {
+    display: flex;
+    gap: 1em;
+
+    .d-date-time-input {
+      margin: 0;
+
+      .date-picker {
+        border: unset;
+      }
+    }
+  }
+
+  .credentials-column {
+    min-width: 330px;
+
+    .credentials-container {
+      display: inline-flex;
+      width: 410px;
+      gap: 0.5em;
+    }
+
+    .client-id,
+    .client-secret {
+      width: 180px;
+    }
+
+    .btn {
+      display: inline-block;
+      max-height: 34px;
+    }
+  }
+
+  .action-column {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-left: 0;
+
+    .inline-spinner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 35px;
+    }
+  }
+
+  .events-integration-connection-row {
+    .select-kit,
+    .select-kit.category-chooser,
+    .select-kit.multi-select {
+      width: 200px;
+    }
+
+    .d-date-input {
+      min-width: 110px;
+    }
+  }
+
+  .events-integration-source-row {
+    td.source-options {
+      min-width: 210px;
+    }
+  }
+
+  .events-integration-provider-row {
+    .name-column {
+      max-width: 140px;
+
+      input {
+        width: 100%;
+      }
+    }
+
+    .status-column {
+      min-width: 90px;
+    }
+
+    .status {
+      padding: 0.4rem;
+      border-radius: 50%;
+      margin-right: 0.25rem;
+      display: inline-block;
+      vertical-align: middle;
+
+      &.authenticated {
+        background: var(--success);
+      }
+
+      &.not-authenticated {
+        background: var(--danger);
+      }
+
+      + span {
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  tr {
+    .select-event {
+      display: none;
+      text-align: center;
+    }
+
+    &.show-select {
+      .select-event {
+        display: block;
+      }
+    }
+  }
+}
+
+.events-integration-event-table {
+  .events-integration-event-row {
+    &.show-select {
+      cursor: pointer;
+    }
+  }
+
+  td.topic {
+    min-width: 350px;
+    max-width: 350px;
+  }
+
+  td.name {
+    min-width: 350px;
+    max-width: 350px;
+  }
+}
+
+.delete-event-modal {
+  .text,
+  .topics-control {
+    margin-bottom: 0.5rem;
+  }
+
+  .events {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 1rem;
+    background-color: var(--primary-low);
+    max-height: 300px;
+    overflow: scroll;
+  }
+}
+
+.events-integration-log-row {
+  td {
+    max-width: 600px;
+  }
+}
+
+.events-integration-message {
+  background-color: var(--primary-low);
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .message-block {
+    .d-icon {
+      margin-right: 4px;
+    }
+
+    .d-icon-check-circle {
+      color: var(--success);
+    }
+
+    .d-icon-times-circle {
+      color: var(--danger);
+    }
+
+    a + a {
+      border-left: 1px solid var(--primary-medium);
+      padding-left: 5px;
+      margin-left: 5px;
+    }
+
+    .message {
+      white-space: nowrap;
+    }
+
+    .list-colon {
+      margin-right: 5px;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+
+      span.action {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  & + div,
+  & + div + div {
+    margin-top: 30px;
+  }
+}
+
+.events-integration-header {
+  h2 {
+    margin: 0;
+  }
+}

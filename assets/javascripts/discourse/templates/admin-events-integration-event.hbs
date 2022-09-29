@@ -1,0 +1,28 @@
+{{#events-integration-header view=view message=message}}
+  {{d-button
+    icon="cog"
+    title="admin.events_integration.event.show_select"
+    action=(action "showSelect")}}
+  {{d-button
+    action=(action "openDelete")
+    label="admin.events_integration.event.delete.label"
+    title="admin.events_integration.event.detel.title"
+    disabled=deleteDisabled
+    class="btn-danger"
+    icon="trash-alt"}}
+{{/events-integration-header}}
+
+<div class="admin-events-integration-container">
+  {{#if hasEvents}}
+    {{events-integration-event-table
+      events=events
+      page=page
+      order=order
+      asc=asc
+      showSelect=showSelect
+      modifySelection=(action "modifySelection")
+      selectAll=selectAll}}
+  {{else}}
+    <p>{{i18n "admin.events_integration.event.none"}}</p>
+  {{/if}}
+</div>

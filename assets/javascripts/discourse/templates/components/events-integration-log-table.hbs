@@ -1,0 +1,15 @@
+<table>
+  <thead>
+    <tr>
+      <TableHeaderToggle @field="created_at" @labelKey="admin.events_integration.log.created_at" @order={{order}} @asc={{asc}} @automatic={{true}} />
+      <TableHeaderToggle @field="log_type" @labelKey="admin.events_integration.log.type" @order={{order}} @asc={{asc}} @automatic={{true}} />
+      <th>{{I18n "admin.events_integration.log.message"}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each logs as |log|}}
+      {{events-integration-log-row log=log}}
+    {{/each}}
+  </tbody>
+</table>
+{{conditional-loading-spinner condition=loading}}

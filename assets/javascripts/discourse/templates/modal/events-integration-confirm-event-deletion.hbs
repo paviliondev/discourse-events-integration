@@ -1,0 +1,20 @@
+<DModalBody @class="delete-event-modal" @title="admin.events_integration.event.delete.title">
+  <div class="text">
+    {{I18n "admin.events_integration.event.delete.confirm" count=eventCount}}
+  </div>
+  <ul class="events">
+    {{#each model.events as |event|}}
+      <li class="event">{{event.name}}</li>
+    {{/each}}
+  </ul>
+  <div class="topics-control">
+    <Input @type="checkbox" class="destroy-topics" @checked={{destroyTopics}} {{on "change" (action "toggleDestroyTopics")}} />
+    {{I18n "admin.events_integration.event.delete.topics"}}
+  </div>
+</DModalBody>
+
+<div class="modal-footer">
+  <DButton @class="btn-primary" @action={{action "delete"}} @label={{btnLabel}} disabled={{destroying}} />
+  <DButton @class="btn-danger" @label="composer.modal_cancel" @action={{action "cancel"}} disabled={{destroying}} />
+  {{conditional-loading-spinner condition=destroying size="small"}}
+</div>

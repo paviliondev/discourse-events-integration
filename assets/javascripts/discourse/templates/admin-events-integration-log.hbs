@@ -1,0 +1,13 @@
+{{#events-integration-header view=view message=message}}{{/events-integration-header}}
+
+<div class="admin-events-integration-container">
+  {{#if hasLogs}}
+    {{events-integration-log-table
+      logs=logs
+      page=page
+      order=order
+      asc=asc}}
+  {{else}}
+    <p>{{i18n "admin.events_integration.log.none"}}</p>
+  {{/if}}
+</div>

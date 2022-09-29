@@ -1,0 +1,58 @@
+<td>
+  {{input
+    value=source.name
+    placeholder=(i18n 'admin.events_integration.source.name.placeholder')
+    class="small source-name"}}
+</td>
+
+<td>
+  {{combo-box
+    value=source.provider_id
+    content=providers
+    onChange=(action "updateProvider")
+    class="source-provider"
+    options=(hash
+      none="admin.events_integration.source.provider.select"
+    )}}
+</td>
+
+<td class="source-options">
+  {{#each sourceOptionsMap as |opts|}}
+    <Input class="source-option" @type={{opts.type}} @name={{opts.name}} @value={{opts.value}} @placeholder={{opts.name}} {{on "change" (action "updateSourceOptions" source.source_options opts.name)}} />
+  {{/each}}
+</td>
+
+<td>
+  <DateTimeInputRange
+    @from={{source.from_time}}
+    @to={{source.to_time}}
+    @showFromTime={{false}}
+    @showToTime={{false}}
+    @onChange={{action "onChangeTimeRange"}}
+    />
+</td>
+
+<td class="action-column">
+  {{conditional-loading-spinner condition=loading size="small"}}
+
+  {{d-button
+    icon="save"
+    title="admin.events_integration.source.save.title"
+    action=(action "saveSource")
+    disabled=saveDisabled
+    class=saveClass}}
+
+  {{d-button
+    action=removeSource
+    actionParam=source
+    icon="trash-alt"
+    title="admin.events_integration.source.remove.title"
+    class="remove-source btn-danger"}}
+
+  {{d-button
+    action=(action "importSource")
+    icon="download"
+    title="admin.events_integration.source.import.title"
+    class=importClass
+    disabled=importDisabled}}
+</td>

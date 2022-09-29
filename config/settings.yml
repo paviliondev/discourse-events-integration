@@ -1,0 +1,6 @@
+discourse_events_integration:
+  events_integration_enabled:
+    default: true
+    client: true
+  update_events_automatically: false
+  update_events_automatically_period_mins: 10

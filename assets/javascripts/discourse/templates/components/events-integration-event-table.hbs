@@ -1,0 +1,29 @@
+<table>
+  <thead>
+    <tr>
+      <TableHeaderToggle @field="start_time" @labelKey="admin.events_integration.event.start_time" @order={{order}} @asc={{asc}} @automatic={{true}} />
+      <TableHeaderToggle @field="name" @labelKey="admin.events_integration.event.name" @order={{order}} @asc={{asc}} @automatic={{true}} />
+      <TableHeaderToggle @field="source_id" @labelKey="admin.events_integration.event.source" @order={{order}} @asc={{asc}} @automatic={{true}} />
+      <th>{{i18n "admin.events_integration.event.topics"}}</th>
+      {{#if showSelect}}
+        <th>
+          {{d-button
+            icon="check-square"
+            title="admin.events_integration.event.select_all"
+            action=(action "toggleSelectAll")}}
+        </th>
+      {{/if}}
+    </tr>
+  </thead>
+  <tbody>
+    {{#each events as |event|}}
+      {{events-integration-event-row
+        event=event
+        modifySelection=modifySelection
+        showSelect=showSelect
+        selectAll=selectAll
+      }}
+    {{/each}}
+  </tbody>
+</table>
+{{conditional-loading-spinner condition=loading}}

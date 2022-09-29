@@ -1,0 +1,132 @@
+en:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_events_integration: "Events Integration"
+
+      events_integration:
+        title: Events
+        actions: Actions
+        source:
+          title: Sources
+          none: No sources.
+          add:
+            label: Add
+            title: Add Source
+          remove:
+            label: Remove
+            title: Remove Source
+            confirm: Are you sure you want to remove '%{source_name}'? Removing a source removes all associated events and connections.
+          name:
+            label: Name
+            placeholder: underscored
+          provider:
+            label: Provider
+            select: Select a provider...
+          save:
+            label: Save
+            title: Save Source
+          source_options:
+            label: Options
+          date_range: Date Range
+          import:
+            label: Import
+            title: Import Source
+        provider:
+          title: Providers
+          none: No providers.
+          add:
+            label: Add
+            title: Add Provider
+          status: Status
+          ready: Ready
+          not_ready: Not Ready
+          name:
+            label: Name
+            placeholder: underscored
+          provider_type:
+            label: Type
+            select: Select a type...
+          method: Method
+          credentials: Credentials
+          no_credentials: No Credentials
+          username: Username
+          password: Password
+          token: Token
+          client_id: Client ID
+          client_secret: Client Secret
+          save:
+            label: Save
+            title: Save Provider
+          remove:
+            label: Remove
+            title: Remove Provider
+            confirm: Are you sure you want to remove '%{provider_name}'? Removing a provider removes associated sources.
+          authenticate:
+            label: Authenticate
+            title: Authenticate Provider
+        connection:
+          title: Connections
+          none: No connections.
+          add:
+            label: Add
+            title: Add Connection
+          remove:
+            label: Remove
+            title: Remove Connection
+            confirm: Are you sure you want to remove this connection?
+          save:
+            label: Save
+            title: Save Connection
+          user: User
+          category: Category
+          source: Source
+          client:
+            label: Client
+            select: Select...
+          source:
+            label: Source
+            select: Select...
+          sync:
+            label: Sync
+            title: Sync Connection
+        event:
+          title: Events
+          select_all: Select All
+          show_select: Show event select
+          start_time: Start Time
+          name: Name
+          source: Source
+          topics: Topics
+          none: No events.
+          delete:
+            label: Delete Events
+            label_with_topics: Delete Events and Topics
+            title: Delete Selected Events
+            confirm:
+              one: "Are you sure you want to delete the event you've selected?"
+              other: "Are you sure you want to delete the %{count} events you've selected?"
+            topics: Also delete associated topics and posts.
+        log:
+          title: Logs
+          created_at: Created At
+          type: Type
+          message: Message
+          none: No logs.
+        message:
+          documentation: "Check out the documentation"
+          connection:
+            info: "Connections are where you show your events"
+            sync_started: "Sync started. Check the result in the <a href='/admin/events-integration/log'>Logs</a>."
+            sync_failed_to_start: "Sync failed to start."
+          source:
+            info: "Sources are how you import events from a provider"
+            import_started: "Import started. Check the result in the <a href='/admin/events-integration/log'>Logs</a>."
+            import_failed_to_start: "Import failed to start."
+          event:
+            info: "The events you've imported"
+          provider:
+            info: "Providers are the services providing your events"
+          log:
+            info: "The logs of your event integrations"

@@ -1,0 +1,64 @@
+<td>
+  <UserChooser
+    @value={{connection.user.username}}
+    @onChange={{action "updateUser"}}
+    class="connection-user"
+    @options={{hash
+      maximum=1
+      excludeCurrentUser=false
+    }} />
+</td>
+
+<td>
+  {{category-chooser
+    value=connection.category_id
+    class="connection-category"
+    onChange=(action (mut connection.category_id))}}
+</td>
+
+<td>
+  {{combo-box
+    value=connection.source_id
+    content=sources
+    onChange=(action (mut connection.source_id))
+    class="connection-source"
+    options=(hash
+      none="admin.events_integration.connection.source.select"
+    )}}
+</td>
+
+<td>
+  {{combo-box
+    value=connection.client
+    content=clients
+    onChange=(action (mut connection.client))
+    class="connection-client"
+    options=(hash
+      none="admin.events_integration.connection.client.select"
+    )}}
+</td>
+
+<td class="action-column">
+  {{conditional-loading-spinner condition=loading size="small"}}
+
+  {{d-button
+    icon="save"
+    title="admin.events_integration.connection.save.title"
+    action=(action "saveConnection")
+    disabled=saveDisabled
+    class=saveClass}}
+
+  {{d-button
+    action=removeConnection
+    actionParam=connection
+    icon="trash-alt"
+    title="admin.events_integration.connection.remove.title"
+    class="btn-danger"}}
+
+  {{d-button
+    action=(action "syncConnection")
+    icon="sync"
+    title="admin.events_integration.connection.sync.title"
+    class=syncClass
+    disabled=syncDisabled}}
+</td>
