@@ -61,6 +61,4 @@ after_initialize do
     ../app/serializers/discourse_events_integration/provider_serializer.rb
     ../config/routes.rb
   ].each { |path| load File.expand_path(path, __FILE__) }
-
-  Category.has_many :events_integration_connections, class_name: "DiscourseEventsIntegration::Connection", foreign_key: 'category_id'
 end
