@@ -5,7 +5,6 @@
 # authors: Angus McLeod
 # url: https://github.com/paviliondev/discourse-events-integration
 # contact_emails: development@pavilion.tech
-# subscription_url: https://coop.pavilion.tech
 
 register_asset 'stylesheets/common/common.scss'
 enabled_site_setting :events_integration_enabled
