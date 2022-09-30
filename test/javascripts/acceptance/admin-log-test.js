@@ -1,4 +1,3 @@
-import selectKit from "discourse/tests/helpers/select-kit-helper";
 import { acceptance, exists } from "discourse/tests/helpers/qunit-helpers";
 import { test } from "qunit";
 import { visit } from "@ember/test-helpers";
@@ -13,16 +12,17 @@ function sourceRoutes(needs) {
         logs: [
           {
             id: 1,
-            log_type: 'import',
-            message: 'Finished importing from my_source. Retrieved 20 events, created 20 events and updated 0 events.',
-            created_at: '2022-11-06T18:00:00.000Z'
-          }
+            log_type: "import",
+            message:
+              "Finished importing from my_source. Retrieved 20 events, created 20 events and updated 0 events.",
+            created_at: "2022-11-06T18:00:00.000Z",
+          },
         ],
-        page: 1
+        page: 1,
       });
     });
     server.delete("/admin/events-integration/log", () => {
-      return helper.response({ "success": "OK" });
+      return helper.response({ success: "OK" });
     });
   });
 }

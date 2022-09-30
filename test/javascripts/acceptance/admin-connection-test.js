@@ -13,25 +13,25 @@ function sourceRoutes(needs) {
         sources: [
           {
             id: 1,
-            name: 'my_source',
+            name: "my_source",
             provider_id: 1,
             source_options: {
-              organization_id: "1234"
-            }
-          }
+              organization_id: "1234",
+            },
+          },
         ],
         connections: [
           {
             id: 1,
             user: {
               id: 1,
-              username: 'angus'
+              username: "angus",
             },
             category_id: 2,
             source_id: 1,
-            client: 'events'
-          }
-        ]
+            client: "events",
+          },
+        ],
       });
     });
     server.put("/admin/events-integration/connection/new", () => {
@@ -40,12 +40,12 @@ function sourceRoutes(needs) {
           id: 1,
           user: {
             id: 1,
-            username: 'angus'
+            username: "angus",
           },
           category_id: 2,
           source_id: 2,
-          client: 'events'
-        }
+          client: "events",
+        },
       });
     });
     server.put("/admin/events-integration/connection/:id", () => {
@@ -54,16 +54,16 @@ function sourceRoutes(needs) {
           id: 1,
           user: {
             id: 1,
-            username: 'angus'
+            username: "angus",
           },
           category_id: 2,
           source_id: 3,
-          client: 'events'
-        }
+          client: "events",
+        },
       });
     });
     server.delete("/admin/events-integration/connection/:id", () => {
-      return helper.response({ "success": "OK" });
+      return helper.response({ success: "OK" });
     });
     server.get("/u/search/users", () => {
       return helper.response({
@@ -81,7 +81,7 @@ function sourceRoutes(needs) {
 }
 
 acceptance("Events Integration | Connection", function (needs) {
-  needs.user({ username: 'angus' });
+  needs.user({ username: "angus" });
   needs.settings({ events_integration_enabled: true });
 
   sourceRoutes(needs);
@@ -89,7 +89,10 @@ acceptance("Events Integration | Connection", function (needs) {
   test("Displays the connection admin", async (assert) => {
     await visit("/admin/events-integration/connection");
 
-    assert.ok(exists(".events-integration.connection"), "it shows the connection route");
+    assert.ok(
+      exists(".events-integration.connection"),
+      "it shows the connection route"
+    );
 
     assert.equal(
       find(".admin-events-integration-controls h2").eq(0).text().trim(),
@@ -114,19 +117,28 @@ acceptance("Events Integration | Connection", function (needs) {
 
     await selectKit("tr[data-connection-id=new] .connection-user").expand();
     await fillIn(".connection-user input.filter-input", "angus");
-    await selectKit("tr[data-connection-id=new] .connection-user").selectRowByValue("angus");
+    await selectKit(
+      "tr[data-connection-id=new] .connection-user"
+    ).selectRowByValue("angus");
 
     await selectKit("tr[data-connection-id=new] .connection-category").expand();
-    await selectKit("tr[data-connection-id=new] .connection-category").selectRowByValue(2);
+    await selectKit(
+      "tr[data-connection-id=new] .connection-category"
+    ).selectRowByValue(2);
 
     await selectKit("tr[data-connection-id=new] .connection-source").expand();
-    await selectKit("tr[data-connection-id=new] .connection-source").selectRowByValue(1);
+    await selectKit(
+      "tr[data-connection-id=new] .connection-source"
+    ).selectRowByValue(1);
 
     await selectKit("tr[data-connection-id=new] .connection-client").expand();
-    await selectKit("tr[data-connection-id=new] .connection-client").selectRowByValue("events");
+    await selectKit(
+      "tr[data-connection-id=new] .connection-client"
+    ).selectRowByValue("events");
 
     assert.ok(
-      find("tr[data-connection-id=new] .save-connection").prop("disabled") === false,
+      find("tr[data-connection-id=new] .save-connection").prop("disabled") ===
+        false,
       "it enables the save button"
     );
 
@@ -137,10 +149,13 @@ acceptance("Events Integration | Connection", function (needs) {
     await visit("/admin/events-integration/connection");
 
     await selectKit("tr[data-connection-id='1'] .connection-category").expand();
-    await selectKit("tr[data-connection-id='1'] .connection-category").selectRowByValue(1);
+    await selectKit(
+      "tr[data-connection-id='1'] .connection-category"
+    ).selectRowByValue(1);
 
     assert.ok(
-      find("tr[data-connection-id='1'] .save-connection").prop("disabled") === false,
+      find("tr[data-connection-id='1'] .save-connection").prop("disabled") ===
+        false,
       "it enables the save button"
     );
 

@@ -13,7 +13,7 @@ function providerRoutes(needs) {
         providers: [
           {
             id: 1,
-            name: 'my_provider',
+            name: "my_provider",
           },
         ],
       });
@@ -22,24 +22,24 @@ function providerRoutes(needs) {
       return helper.response({
         provider: {
           id: 2,
-          name: 'my_new_provider',
-          provider_type: 'developer',
-          authenticated: true
-        }
+          name: "my_new_provider",
+          provider_type: "developer",
+          authenticated: true,
+        },
       });
     });
     server.put("/admin/events-integration/provider/:id", () => {
       return helper.response({
         provider: {
           id: 1,
-          name: 'my_updated_provider',
-          provider_type: 'developer',
-          authenticated: true
-        }
+          name: "my_updated_provider",
+          provider_type: "developer",
+          authenticated: true,
+        },
       });
     });
     server.delete("/admin/events-integration/provider/:id", () => {
-      return helper.response({ "success": "OK" });
+      return helper.response({ success: "OK" });
     });
   });
 }
@@ -53,7 +53,10 @@ acceptance("Events Integration | Provider", function (needs) {
   test("Displays the provider admin", async (assert) => {
     await visit("/admin/events-integration/provider");
 
-    assert.ok(exists(".events-integration.provider"), "it shows the provider route");
+    assert.ok(
+      exists(".events-integration.provider"),
+      "it shows the provider route"
+    );
 
     assert.equal(
       find(".admin-events-integration-controls h2").eq(0).text().trim(),
@@ -79,7 +82,8 @@ acceptance("Events Integration | Provider", function (needs) {
     await fillIn("tr[data-provider-id=new] .provider-name", "my_provider");
 
     assert.ok(
-      find("tr[data-provider-id=new] .save-provider").prop("disabled") === false,
+      find("tr[data-provider-id=new] .save-provider").prop("disabled") ===
+        false,
       "it enables the save button"
     );
 
@@ -89,7 +93,10 @@ acceptance("Events Integration | Provider", function (needs) {
   test("Edit provider works", async (assert) => {
     await visit("/admin/events-integration/provider");
 
-    await fillIn("tr[data-provider-id=1] .provider-name", "my_updated_provider");
+    await fillIn(
+      "tr[data-provider-id=1] .provider-name",
+      "my_updated_provider"
+    );
 
     assert.ok(
       find("tr[data-provider-id=1] .save-provider").prop("disabled") === false,
@@ -120,10 +127,7 @@ acceptance("Events Integration | Provider", function (needs) {
     await selectKit(".provider-type").expand();
     await selectKit(".provider-type").selectRowByValue("eventbrite");
 
-    assert.ok(
-      exists("input.token"),
-      "it displays the token input"
-    );
+    assert.ok(exists("input.token"), "it displays the token input");
     assert.ok(
       exists(".btn.toggle-secret-visibility"),
       "it displays the secret visibility toggle"

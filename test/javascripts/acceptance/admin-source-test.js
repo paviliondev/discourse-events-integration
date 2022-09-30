@@ -13,49 +13,49 @@ function sourceRoutes(needs) {
         providers: [
           {
             id: 1,
-            name: 'my_provider',
-            provider_type: 'eventbrite',
-            authenticated: true
+            name: "my_provider",
+            provider_type: "eventbrite",
+            authenticated: true,
           },
         ],
         sources: [
           {
             id: 1,
-            name: 'my_source',
+            name: "my_source",
             provider_id: 1,
             source_options: {
-              organization_id: "1234"
-            }
-          }
-        ]
+              organization_id: "1234",
+            },
+          },
+        ],
       });
     });
     server.put("/admin/events-integration/source/new", () => {
       return helper.response({
         source: {
           id: 2,
-          name: 'my_new_source',
+          name: "my_new_source",
           provider_id: 1,
           source_options: {
-            organization_id: "1234"
-          }
-        }
+            organization_id: "1234",
+          },
+        },
       });
     });
     server.put("/admin/events-integration/source/:id", () => {
       return helper.response({
         source: {
           id: 1,
-          name: 'my_updated_source',
+          name: "my_updated_source",
           provider_id: 1,
           source_options: {
-            organization_id: "1234"
-          }
-        }
+            organization_id: "1234",
+          },
+        },
       });
     });
     server.delete("/admin/events-integration/source/:id", () => {
-      return helper.response({ "success": "OK" });
+      return helper.response({ success: "OK" });
     });
   });
 }
@@ -69,7 +69,10 @@ acceptance("Events Integration | Source", function (needs) {
   test("Displays the source admin", async (assert) => {
     await visit("/admin/events-integration/source");
 
-    assert.ok(exists(".events-integration.source"), "it shows the source route");
+    assert.ok(
+      exists(".events-integration.source"),
+      "it shows the source route"
+    );
 
     assert.equal(
       find(".admin-events-integration-controls h2").eq(0).text().trim(),
@@ -83,10 +86,7 @@ acceptance("Events Integration | Source", function (needs) {
 
     await click("#add-source");
 
-    assert.ok(
-      exists("tr[data-source-id=new]"),
-      "it displays a new source row"
-    );
+    assert.ok(exists("tr[data-source-id=new]"), "it displays a new source row");
     assert.ok(
       find("tr[data-source-id=new] .save-source").prop("disabled"),
       "it disables the save button"
@@ -95,7 +95,9 @@ acceptance("Events Integration | Source", function (needs) {
     await fillIn("tr[data-source-id=new] .source-name", "my_updated_source");
 
     await selectKit("tr[data-source-id=new] .source-provider").expand();
-    await selectKit("tr[data-source-id=new] .source-provider").selectRowByValue(1);
+    await selectKit("tr[data-source-id=new] .source-provider").selectRowByValue(
+      1
+    );
 
     assert.ok(
       find("tr[data-source-id=new] .save-source").prop("disabled") === false,

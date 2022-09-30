@@ -1,4 +1,3 @@
-import selectKit from "discourse/tests/helpers/select-kit-helper";
 import { acceptance, exists } from "discourse/tests/helpers/qunit-helpers";
 import { test } from "qunit";
 import { visit } from "@ember/test-helpers";
@@ -16,7 +15,8 @@ function sourceRoutes(needs) {
             start_time: "2022-11-06T18:00:00.000Z",
             end_time: "2022-11-06T21:00:00.000Z",
             name: "La Traviata",
-            description: "An opera in three acts by Giuseppe Verdi set to an Italian libretto by Francesco Maria Piave.",
+            description:
+              "An opera in three acts by Giuseppe Verdi set to an Italian libretto by Francesco Maria Piave.",
             status: "draft",
             url: "https://event-platfom.com/events/la-traviata",
             created_at: "2022-09-28T14:38:03.711Z",
@@ -25,21 +25,21 @@ function sourceRoutes(needs) {
               {
                 id: 1,
                 title: "Event Topic",
-                fancy_title: "Event Topic"
-              }
+                fancy_title: "Event Topic",
+              },
             ],
             source: {
               id: 1,
               name: "my_source",
-              provider_id: 1
-            }
+              provider_id: 1,
+            },
           },
         ],
-        page: 1
+        page: 1,
       });
     });
     server.delete("/admin/events-integration/event", () => {
-      return helper.response({ "success": "OK" });
+      return helper.response({ success: "OK" });
     });
   });
 }
