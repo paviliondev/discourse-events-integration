@@ -11,6 +11,9 @@ module DiscourseEventsIntegration
       eventbrite: {
         'organization_id': /\d/
       },
+      meetup: {
+        'group_urlname': /[a-z]/
+      },
       humanitix: {
       },
       eventzilla: {
