@@ -54,7 +54,7 @@ describe DiscourseEventsIntegration::Auth::Meetup do
       .to_return(body: access_response.to_json, headers: { "Content-Type" => "application/json" }, status: 200)
 
     expect_enqueued_with(job: :discourse_events_integration_refresh_token, args: { provider_id: provider.id, current_site_id: "default" }) do
-      auth.get_token(code)
+      auth.request_token(code)
     end
 
     provider.reload
@@ -78,7 +78,7 @@ describe DiscourseEventsIntegration::Auth::Meetup do
       .to_return(body: refresh_response.to_json, headers: { "Content-Type" => "application/json" }, status: 200)
 
     expect_enqueued_with(job: :discourse_events_integration_refresh_token, args: { provider_id: provider.id, current_site_id: "default" }) do
-      auth.get_token(code)
+      auth.request_token(code)
     end
 
     provider.reload
@@ -96,7 +96,7 @@ describe DiscourseEventsIntegration::Auth::Meetup do
     stub_request(:post, "#{auth.base_url}/access")
       .to_return(headers: { "Content-Type" => "application/json" }, status: 400)
 
-    auth.get_token(code)
+    auth.request_token(code)
 
     provider.reload
     expect(provider.token).to eq(nil)
@@ -120,7 +120,7 @@ describe DiscourseEventsIntegration::Auth::Meetup do
     stub_request(:post, "#{auth.base_url}/access")
       .to_return(headers: { "Content-Type" => "application/json" }, status: 400)
 
-    auth.get_token(code)
+    auth.request_token(code)
 
     freeze_time(3.days.from_now)
 

@@ -59,7 +59,7 @@ module DiscourseEventsIntegration
         raise Discourse::InvalidParameters
       end
 
-      provider.get_token(params[:code])
+      provider.request_token(params[:code])
 
       redirect_to "/admin/events-integration/provider"
     end

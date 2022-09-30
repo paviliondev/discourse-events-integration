@@ -12,6 +12,8 @@ module PluginGem
       spec_file = spec_path + "/omnievent-0.1.0.gemspec" if name.include?('omnievent-0.1.0')
       spec_file = spec_path + "/omnievent-icalendar-0.1.0.gemspec" if name.include?('omnievent-icalendar-0.1.0')
       spec_file = spec_path + "/omnievent-eventbrite-0.1.0.gemspec" if name.include?('omnievent-eventbrite-0.1.0')
+      spec_file = spec_path + "/omnievent-humanitix-0.1.0.gemspec" if name.include?('omnievent-humanitix-0.1.0')
+      spec_file = spec_path + "/omnievent-eventzilla-0.1.0.gemspec" if name.include?('omnievent-eventzilla-0.1.0')
     else
       spec_file  = spec_path + "/#{name}-#{version}"
       spec_file += "-#{opts[:platform]}" if opts[:platform]

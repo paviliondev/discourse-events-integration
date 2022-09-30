@@ -22,13 +22,8 @@ const SOURCE_OPTIONS = {
       default: null,
     },
   ],
-  meetup: [
-    {
-      name: "group_urlname",
-      type: "text",
-      default: "",
-    },
-  ],
+  humanitix: [],
+  eventzilla: [],
 };
 
 export default Component.extend({
@@ -72,13 +67,7 @@ export default Component.extend({
     "source.source_options.@each"
   )
   saveDisabled(sourceChanged, name, providerId, sourceOptions) {
-    return (
-      !sourceChanged ||
-      !name ||
-      !providerId ||
-      !sourceOptions ||
-      Object.keys(sourceOptions).length === 0
-    );
+    return !sourceChanged || !name || !providerId || !sourceOptions;
   },
 
   @discourseComputed("sourceChanged")

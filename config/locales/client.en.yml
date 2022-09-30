@@ -29,6 +29,7 @@ en:
             title: Save Source
           source_options:
             label: Options
+            none: No options
           date_range: Date Range
           import:
             label: Import

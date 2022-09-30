@@ -13,7 +13,7 @@ module DiscourseEventsIntegration
         raise NotImplementedError
       end
 
-      def get_token(code)
+      def request_token(code)
         raise NotImplementedError
       end
 

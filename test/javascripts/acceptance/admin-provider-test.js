@@ -128,21 +128,5 @@ acceptance("Events Integration | Provider", function (needs) {
       exists(".btn.toggle-secret-visibility"),
       "it displays the secret visibility toggle"
     );
-
-    await selectKit(".provider-type").expand();
-    await selectKit(".provider-type").selectRowByValue("meetup");
-
-    assert.ok(
-      exists("input.client-id"),
-      "it displays the client id input"
-    );
-    assert.ok(
-      exists("input.client-secret"),
-      "it displays the client secret input"
-    );
-    assert.ok(
-      exists(".btn.toggle-secret-visibility"),
-      "it displays the secret visibility toggle"
-    );
   });
 });

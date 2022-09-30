@@ -1,11 +1,11 @@
-{{#events-integration-header view=view message=message}}
+<EventsIntegrationHeader @view={{view}} @message={{message}}>
   {{d-button
     id="add-source"
     action=(action "addSource")
     label="admin.events_integration.source.add.label"
     title="admin.events_integration.source.add.title"
     icon="plus"}}
-{{/events-integration-header}}
+</EventsIntegrationHeader>
 
 <div class="admin-events-integration-container">
   {{#if hasSources}}

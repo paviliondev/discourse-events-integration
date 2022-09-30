@@ -29,17 +29,22 @@ module DiscourseEventsIntegration
         data
       end
 
-      result = Event.upsert_all(events,
-        unique_by: %i[ uid provider_id ],
-        record_timestamps: true,
-        returning: Arel.sql("(xmax = 0) AS inserted")
-      )
+      events_count = 0
+      created_count = 0
+      updated_count = 0
 
-      if source
+      if events.present?
+        result = Event.upsert_all(events,
+          unique_by: %i[ uid provider_id ],
+          record_timestamps: true,
+          returning: Arel.sql("(xmax = 0) AS inserted")
+        )
         events_count = events.size
         created_count = result.rows.map { |r| r[0] }.tally[true].to_i
         updated_count = events_count - created_count
+      end
 
+      if source
         Log.create(
           log_type: 'import',
           message: I18n.t("log.import_finished",

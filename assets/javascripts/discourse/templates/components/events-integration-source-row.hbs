@@ -1,7 +1,7 @@
 <td>
   {{input
     value=source.name
-    placeholder=(i18n 'admin.events_integration.source.name.placeholder')
+    placeholder=(i18n "admin.events_integration.source.name.placeholder")
     class="small source-name"}}
 </td>
 
@@ -17,9 +17,13 @@
 </td>
 
 <td class="source-options">
-  {{#each sourceOptionsMap as |opts|}}
-    <Input class="source-option" @type={{opts.type}} @name={{opts.name}} @value={{opts.value}} @placeholder={{opts.name}} {{on "change" (action "updateSourceOptions" source.source_options opts.name)}} />
-  {{/each}}
+  {{#if sourceOptionsMap}}
+    {{#each sourceOptionsMap as |opts|}}
+      <Input class="source-option" @type={{opts.type}} name={{opts.name}} @value={{opts.value}} placeholder={{opts.name}} {{on "change" (action "updateSourceOptions" source.source_options opts.name)}} />
+    {{/each}}
+  {{else}}
+    {{i18n "admin.events_integration.source.source_options.none"}}
+  {{/if}}
 </td>
 
 <td>

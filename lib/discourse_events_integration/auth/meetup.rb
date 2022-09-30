@@ -11,7 +11,7 @@ module DiscourseEventsIntegration
         "#{base_url}/authorize?client_id=#{provider.client_id}&response_type=code&redirect_uri=#{provider.redirect_uri}&state=#{state}"
       end
 
-      def get_token(code)
+      def request_token(code)
         body = {
           client_id: provider.client_id,
           client_secret: provider.client_secret,
@@ -19,7 +19,7 @@ module DiscourseEventsIntegration
           redirect_uri: provider.redirect_uri,
           code: code
         }
-        request_token(body)
+        perform_request(body)
       end
 
       def refresh_token!
@@ -29,12 +29,12 @@ module DiscourseEventsIntegration
           grant_type: "refresh_token",
           refresh_token: provider.refresh_token
         }
-        request_token(body)
+        perform_request(body)
       end
 
       protected
 
-      def request_token(body)
+      def perform_request(body)
         response = Excon.post("#{base_url}/access",
           headers: { "Content-Type" => "application/x-www-form-urlencoded" },
           body: URI.encode_www_form(body)

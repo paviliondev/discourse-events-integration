@@ -92,8 +92,8 @@ describe DiscourseEventsIntegration::ProviderController do
       code = "1234"
       write_secure_session("#{described_class::AUTH_SESSION_KEY}-#{user.id}", state)
 
-      DiscourseEventsIntegration::Provider.any_instance.stubs(:get_token).returns(nil)
-      DiscourseEventsIntegration::Provider.any_instance.expects(:get_token).with(code).once
+      DiscourseEventsIntegration::Provider.any_instance.stubs(:request_token).returns(nil)
+      DiscourseEventsIntegration::Provider.any_instance.expects(:request_token).with(code).once
 
       get "/admin/events-integration/provider/#{provider.id}/redirect", params: {
         state: state,

@@ -1,4 +1,4 @@
-{{#admin-nav}}
+<AdminNav>
   {{nav-item route="admin.eventsIntegration.connection" label="admin.events_integration.connection.title"}}
   {{nav-item route="admin.eventsIntegration.source" label="admin.events_integration.source.title"}}
   {{nav-item route="admin.eventsIntegration.provider" label="admin.events_integration.provider.title"}}
@@ -8,7 +8,7 @@
   <li class="settings">
     <DButton @class="btn-default" @action={{route-action "showSettings"}} @actionParam={{plugin}} @icon="cog" @label="admin.plugins.change_settings_short" />
   </li>
-{{/admin-nav}}
+</AdminNav>
 
 <div class="admin-container">
   {{outlet}}

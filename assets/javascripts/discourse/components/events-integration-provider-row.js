@@ -4,11 +4,11 @@ import discourseComputed from "discourse-common/utils/decorators";
 import { contentsMap } from "../lib/events-integration";
 import { or } from "@ember/object/computed";
 
-const TOKEN_TYPES = ["eventbrite"];
+const TOKEN_TYPES = ["eventbrite", "humanitix", "eventzilla"];
 
 const NO_AUTH_TYPES = ["icalendar"];
 
-const OAUTH2_TYPES = ["meetup"];
+const OAUTH2_TYPES = [];
 
 const PROVIDER_TYPES = [...NO_AUTH_TYPES, ...TOKEN_TYPES, ...OAUTH2_TYPES];
 

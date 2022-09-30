@@ -5,7 +5,7 @@ module DiscourseEventsIntegration
     self.table_name = "discourse_events_integration_providers"
 
     NO_AUTH ||= %w(developer icalendar)
-    TOKEN ||= %w(eventbrite)
+    TOKEN ||= %w(eventbrite humanitix eventzilla)
     OAUTH2 ||= %w(meetup)
     TYPES = NO_AUTH + TOKEN + OAUTH2
 
@@ -79,8 +79,8 @@ module DiscourseEventsIntegration
       "#{Discourse.base_url}/admin/events-integration/provider/#{self.id}/redirect"
     end
 
-    def get_token(code)
-      auth.get_token(code)
+    def request_token(code)
+      auth.request_token(code)
     end
 
     def auth
