@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # name: discourse-events-integration
 # about: Integrate events into Discourse
-# version: 0.1.0
+# version: 0.1.0.beta
 # authors: Angus McLeod
 # url: https://github.com/paviliondev/discourse-events-integration
 # contact_emails: development@pavilion.tech

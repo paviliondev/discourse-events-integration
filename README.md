@@ -1,4 +1,6 @@
-# Discourse Events Integration Plugin
+# Discourse Events Integration Plugin (Beta)
+
+> This plugin is currently in beta. Production release is expected in late October.
 
 The Events Integration Plugin lets you integrate events into your Discourse forum.
 
