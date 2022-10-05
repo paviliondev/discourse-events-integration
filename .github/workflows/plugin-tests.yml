@@ -95,6 +95,12 @@ jobs:
       - name: Yarn install
         run: yarn install
 
+      - name: Pull client plugins
+        if: matrix.build_type == 'backend'
+        run: |
+          bin/rake plugin:install[https://github.com/discourse/discourse-calendar.git]
+          bin/rake plugin:install[https://github.com/paviliondev/discourse-events.git]
+
       - name: Fetch app state cache
         uses: actions/cache@v3
         id: app-cache

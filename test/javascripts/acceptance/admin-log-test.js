@@ -12,7 +12,8 @@ function sourceRoutes(needs) {
         logs: [
           {
             id: 1,
-            log_type: "import",
+            level: "info",
+            context: "import",
             message:
               "Finished importing from my_source. Retrieved 20 events, created 20 events and updated 0 events.",
             created_at: "2022-11-06T18:00:00.000Z",
@@ -45,9 +46,9 @@ acceptance("Events Integration | log", function (needs) {
     );
 
     assert.equal(
-      find("td.log-type").eq(0).text().trim(),
-      "import",
-      "Log type displayed"
+      find("td.log-level").eq(0).text().trim(),
+      "info",
+      "Log level displayed"
     );
   });
 });
