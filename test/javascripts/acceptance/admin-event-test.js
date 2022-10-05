@@ -62,9 +62,9 @@ acceptance("Events Integration | Event", function (needs) {
     );
 
     assert.equal(
-      find(".events-integration-event-row .start-time").eq(0).text().trim(),
-      "Nov 6, 2022 7:00 pm",
-      "Start time displayed"
+      find(".events-integration-event-row .name").eq(0).text().trim(),
+      "La Traviata",
+      "Name displayed"
     );
   });
 });
