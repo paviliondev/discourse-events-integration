@@ -3,10 +3,12 @@
 module DiscourseEventsIntegration
   module Auth
     class Base
-      attr_reader :provider
+      attr_reader :provider,
+                  :logger
 
       def initialize(provider_id)
         @provider = Provider.find(provider_id)
+        @logger = Logger.new(:auth)
       end
 
       def authorization_url
@@ -19,6 +21,10 @@ module DiscourseEventsIntegration
 
       def refresh_token!
         raise NotImplementedError
+      end
+
+      def log(type, message)
+        logger.send(type.to_s, message)
       end
     end
   end

@@ -24,6 +24,13 @@ const SOURCE_OPTIONS = {
   ],
   humanitix: [],
   eventzilla: [],
+  meetup: [
+    {
+      name: "group_urlname",
+      type: "text",
+      default: "",
+    },
+  ],
 };
 
 export default Component.extend({

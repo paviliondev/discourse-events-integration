@@ -4,14 +4,14 @@ require "rails_helper"
 
 describe DiscourseEventsIntegration::ImportManager do
   subject { DiscourseEventsIntegration::ImportManager }
-  fab!(:provider) { Fabricate(:discourse_events_integration_provider) }
-  fab!(:source) { Fabricate(:discourse_events_integration_source) }
-  let(:raw_data) { OmniEvent::Strategies::Developer.raw_data }
+
+  let(:uri) { File.join(File.expand_path("../../..", __dir__), "spec", "fixtures", "list_events.json") }
+  let(:raw_data) { JSON.parse(File.open(uri).read).to_h }
+  let(:provider) { Fabricate(:discourse_events_integration_provider) }
+  let(:source) { Fabricate(:discourse_events_integration_source, source_options: { uri: uri }) }
 
   def event_uids
-    OmniEvent::Strategies::Developer.raw_data["events"].map do |event|
-      event["id"]
-    end
+    raw_data["events"].map { |event| event["id"] }
   end
 
   it "imports a source" do
@@ -21,6 +21,7 @@ describe DiscourseEventsIntegration::ImportManager do
   end
 
   it 'imports all active sources' do
+    source
     subject.import_all_sources
 
     events = DiscourseEventsIntegration::Event.all

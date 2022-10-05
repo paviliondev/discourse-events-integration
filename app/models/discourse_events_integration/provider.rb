@@ -15,7 +15,7 @@ module DiscourseEventsIntegration
     validates :provider_type, inclusion: { in: TYPES, message: "%{value} is not a valid provider type" }
 
     def options
-      if TOKEN.include?(self.provider_type)
+      if (TOKEN + OAUTH2).include?(self.provider_type)
         { token: self.token }
       end
     end
@@ -76,7 +76,7 @@ module DiscourseEventsIntegration
 
     def redirect_uri
       return nil unless oauth2_type?
-      "#{Discourse.base_url}/admin/events-integration/provider/#{self.id}/redirect"
+      "#{DiscourseEventsIntegration.base_url}/admin/events-integration/provider/#{self.id}/redirect"
     end
 
     def request_token(code)

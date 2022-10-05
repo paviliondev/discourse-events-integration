@@ -3,7 +3,8 @@
 module DiscourseEventsIntegration
   class Syncer
     attr_reader :user,
-                :connection
+                :connection,
+                :logger
 
     attr_accessor :opts
 
@@ -12,6 +13,7 @@ module DiscourseEventsIntegration
 
       @user = user
       @connection = connection
+      @logger = Logger.new(:sync)
     end
 
     def sync(_opts = {})
@@ -46,6 +48,10 @@ module DiscourseEventsIntegration
 
     def source_events
       @source_events ||= Event.where("discourse_events_integration_events.source_id = #{connection.source.id}")
+    end
+
+    def log(type, message)
+      logger.send(type.to_s, message)
     end
   end
 end

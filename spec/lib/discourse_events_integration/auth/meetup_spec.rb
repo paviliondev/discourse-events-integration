@@ -103,7 +103,7 @@ describe DiscourseEventsIntegration::Auth::Meetup do
     expect(provider.refresh_token).to eq(nil)
     expect(provider.token_expires_at).to eq(nil)
     expect(provider.authenticated?).to eq(false)
-    expect(DiscourseEventsIntegration::Log.where(log_type: 'error').size).to eq(1)
+    expect(DiscourseEventsIntegration::Log.where(level: 'error').size).to eq(1)
   end
 
   it "handles a failure to refresh a token" do
@@ -129,6 +129,6 @@ describe DiscourseEventsIntegration::Auth::Meetup do
     expect(provider.refresh_token).to eq(refresh_token)
     expect(provider.token_expires_at).to eq_time(expires_at)
     expect(provider.authenticated?).to eq(false)
-    expect(DiscourseEventsIntegration::Log.where(log_type: 'error').size).to eq(1)
+    expect(DiscourseEventsIntegration::Log.where(level: 'error').size).to eq(1)
   end
 end

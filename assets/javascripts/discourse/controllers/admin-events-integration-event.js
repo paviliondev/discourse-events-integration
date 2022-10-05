@@ -13,9 +13,14 @@ export default Controller.extend(Message, {
   asc: null,
   view: "event",
 
-  @discourseComputed("selectedEvents.[]")
-  deleteDisabled(selectedEvents) {
-    return !selectedEvents.length;
+  @discourseComputed("selectedEvents.[]", "hasEvents")
+  deleteDisabled(selectedEvents, hasEvents) {
+    return !hasEvents || !selectedEvents.length;
+  },
+
+  @discourseComputed("hasEvents")
+  selectDisabled(hasEvents) {
+    return !hasEvents;
   },
 
   actions: {

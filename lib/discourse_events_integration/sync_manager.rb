@@ -20,29 +20,25 @@ module DiscourseEventsIntegration
       category_name = syncer.connection.category.name
 
       unless syncer&.class.ready?
-        Log.create(
-          log_type: "error",
-          message: I18n.t("log.sync_client_not_ready",
-            client_name: client_name,
-            source_name: source_name,
-            category_name: category_name
-          )
+        message = I18n.t("log.sync_client_not_ready",
+          client_name: client_name,
+          source_name: source_name,
+          category_name: category_name
         )
+        syncer.log(:error, message)
         return false
       end
 
       result = syncer.sync
 
-      Log.create(
-        log_type: "sync",
-        message: I18n.t('log.sync_finished',
-          client_name: client.humanize,
-          source_name: source_name,
-          category_name: category_name,
-          created_count: result[:created_topics].size,
-          updated_count: result[:updated_topics].size
-        )
+      message = I18n.t('log.sync_finished',
+        client_name: client.humanize,
+        source_name: source_name,
+        category_name: category_name,
+        created_count: result[:created_topics].size,
+        updated_count: result[:updated_topics].size
       )
+      syncer.log(:info, message)
 
       result
     end

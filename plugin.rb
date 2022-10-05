@@ -17,11 +17,12 @@ gem "date", "3.2.2"
 gem "time", "0.2.0"
 gem "stringio", "3.0.2"
 gem "open-uri", "0.2.0"
-gem "omnievent", "0.1.0.pre1"
+gem "omnievent", "0.1.0.pre1", require_name: "omnievent"
 gem "omnievent-icalendar", "0.1.0.pre1", require_name: "omnievent/icalendar"
-gem "omnievent-api", "0.1.0.pre1", require_name: "omnievent/api"
-gem "omnievent-eventbrite", "0.1.0.pre1", require_name: "omnievent/eventbrite"
-gem "omnievent-eventzilla", "0.1.0.pre1", require_name: "omnievent/eventzilla"
+gem "omnievent-api", "0.1.0.pre2", require_name: "omnievent/api"
+gem "omnievent-eventbrite", "0.1.0.pre2", require_name: "omnievent/eventbrite"
+gem "omnievent-eventzilla", "0.1.0.pre2", require_name: "omnievent/eventzilla"
+gem "omnievent-meetup", "0.1.0.pre1", require_name: "omnievent/meetup"
 
 register_svg_icon "fingerprint"
 register_svg_icon "save"
@@ -29,6 +30,7 @@ register_svg_icon "save"
 after_initialize do
   %w[
     ../lib/discourse_events_integration.rb
+    ../lib/discourse_events_integration/logger.rb
     ../lib/discourse_events_integration/import_manager.rb
     ../lib/discourse_events_integration/sync_manager.rb
     ../lib/discourse_events_integration/syncer.rb

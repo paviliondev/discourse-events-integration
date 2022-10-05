@@ -4,9 +4,11 @@ module DiscourseEventsIntegration
   class Log < ActiveRecord::Base
     self.table_name = 'discourse_events_integration_logs'
 
-    enum log_type: [ :import, :sync, :authentication, :error ]
+    enum level: [ :info, :error ]
+    enum context: [ :import, :sync, :auth ]
 
     validates :message, presence: true
+    validates :level, presence: true
   end
 end
 

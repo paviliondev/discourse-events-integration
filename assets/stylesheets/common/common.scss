@@ -42,6 +42,11 @@
 
   input {
     margin: 0;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 200px;
 
     &.small {
       width: 150px;
@@ -109,7 +114,8 @@
 
   .events-integration-source-row {
     td.source-options {
-      min-width: 210px;
+      min-width: 200px;
+      max-width: 200px;
     }
   }
 
@@ -152,6 +158,10 @@
     .select-event {
       display: none;
       text-align: center;
+
+      input {
+        margin-left: 1rem;
+      }
     }
 
     &.show-select {
@@ -174,9 +184,8 @@
     max-width: 350px;
   }
 
-  td.name {
-    min-width: 350px;
-    max-width: 350px;
+  th.event-actions {
+    text-align: right;
   }
 }
 

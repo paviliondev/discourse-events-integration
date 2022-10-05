@@ -3,18 +3,23 @@
 module DiscourseEventsIntegration
   class ImportManager
     attr_reader :provider,
-                :source
+                :source,
+                :logger
 
     def initialize(provider, source)
       @provider = provider
       @source = source
+      @logger = Logger.new(:import)
 
-      ::OmniEvent::Builder.new do
+      OmniEvent.config.logger = @logger
+      OmniEvent::Builder.new do
         provider provider.provider_type, provider.options
       end
     end
 
     def import(opts = {})
+      opts.merge!(debug: Rails.env.development?)
+
       events = ::OmniEvent.list_events(provider.provider_type, opts).map do |e|
         data = e.data.to_h.with_indifferent_access
 
@@ -45,15 +50,13 @@ module DiscourseEventsIntegration
       end
 
       if source
-        Log.create(
-          log_type: 'import',
-          message: I18n.t("log.import_finished",
-            source_name: source.name,
-            events_count: events_count,
-            created_count: created_count,
-            updated_count: updated_count,
-          )
+        message = I18n.t("log.import_finished",
+          source_name: source.name,
+          events_count: events_count,
+          created_count: created_count,
+          updated_count: updated_count,
         )
+        logger.send(:info, message)
       end
 
       {

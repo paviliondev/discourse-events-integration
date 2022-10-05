@@ -18,7 +18,6 @@ module DiscourseEventsIntegration
 
             ec.topic.custom_fields["event_start"] = event.start_time.to_i
             ec.topic.custom_fields["event_end"] = event.end_time.to_i
-            ec.topic.custom_fields["event_timezone"] = event.timezone
             ec.topic.save_custom_fields(true)
 
             topics_updated << ec.topic.id
@@ -43,8 +42,7 @@ module DiscourseEventsIntegration
               custom_fields: {
                 "#{Event::UID_TOPIC_CUSTOM_FIELD}": event.uid,
                 "event_start": event.start_time.to_i,
-                "event_end": event.end_time.to_i,
-                "event_timezone": event.timezone
+                "event_end": event.end_time.to_i
               }
             },
             raw: post_raw(event),
@@ -82,4 +80,3 @@ end
 # Fields:
 #  event_start        unix datetime
 #  event_end          unix datetime
-#  event_timezone     IANA Timezone

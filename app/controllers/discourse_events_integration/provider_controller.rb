@@ -55,7 +55,7 @@ module DiscourseEventsIntegration
       valid_state = params[:state] === secure_session["#{AUTH_SESSION_KEY}-#{current_user.id}"]
 
       unless valid_state && params[:code] && provider = Provider.find_by(id: params[:state].split(':').last.to_i)
-        Log.create(log_type: 'error', message: "Invalid authorization response for provider #{params[:state]}")
+        Log.create(level: 'error', context: 'auth', message: "Invalid authorization response for provider #{params[:state]}")
         raise Discourse::InvalidParameters
       end
 

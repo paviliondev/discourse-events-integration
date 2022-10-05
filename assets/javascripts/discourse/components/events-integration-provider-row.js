@@ -8,7 +8,7 @@ const TOKEN_TYPES = ["eventbrite", "humanitix", "eventzilla"];
 
 const NO_AUTH_TYPES = ["icalendar"];
 
-const OAUTH2_TYPES = [];
+const OAUTH2_TYPES = ["meetup"];
 
 const PROVIDER_TYPES = [...NO_AUTH_TYPES, ...TOKEN_TYPES, ...OAUTH2_TYPES];
 
@@ -44,9 +44,13 @@ export default Component.extend({
     return contentsMap(PROVIDER_TYPES);
   },
 
-  @discourseComputed("canAuthenicate", "providerChanged")
-  authenticateDisabled(canAuthenicate, providerChanged) {
-    return !canAuthenicate || providerChanged;
+  @discourseComputed(
+    "canAuthenicate",
+    "providerChanged",
+    "provider.authenticated"
+  )
+  authenticateDisabled(canAuthenicate, providerChanged, providerAuthenticated) {
+    return !canAuthenicate || providerChanged || providerAuthenticated;
   },
 
   @discourseComputed("authenticateDisabled")

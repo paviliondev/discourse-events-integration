@@ -44,7 +44,7 @@ module DiscourseEventsIntegration
           raise StandardError unless response.status == 200
           data = JSON.parse(response.body)
         rescue JSON::ParserError, StandardError => e
-          Log.create(log_type: 'error', message: "Failed to retrieve access token for #{provider.name}")
+          log(:error, "Failed to retrieve access token for #{provider.name}")
           return false
         end
 
@@ -53,10 +53,11 @@ module DiscourseEventsIntegration
         provider.refresh_token = data['refresh_token']
 
         if provider.save!
-          refresh_at = provider.reload.token_expires_at.to_time - 2.hours
+          refresh_at = provider.reload.token_expires_at.to_time - 10.minutes
           Jobs.enqueue_at(refresh_at, :discourse_events_integration_refresh_token, provider_id: provider.id)
         else
-          Log.create(log_type: 'error', message: "Failed to save access token for #{provider.name}")
+          log(:error, "Failed to save access token for #{provider.name}")
+          false
         end
       end
     end

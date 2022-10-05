@@ -5,6 +5,9 @@ module DiscourseEventsIntegration
     self.table_name = 'discourse_events_integration_sources'
 
     SOURCE_OPTIONS ||= {
+      developer: {
+        'uri': /./
+      },
       icalendar: {
         'uri': URI.regexp
       },

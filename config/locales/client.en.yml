@@ -112,7 +112,8 @@ en:
         log:
           title: Logs
           created_at: Created At
-          type: Type
+          level: Level
+          context: Context
           message: Message
           none: No logs.
         message:

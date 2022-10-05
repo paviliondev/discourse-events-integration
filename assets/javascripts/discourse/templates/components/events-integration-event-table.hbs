@@ -6,7 +6,7 @@
       <TableHeaderToggle @field="source_id" @labelKey="admin.events_integration.event.source" @order={{order}} @asc={{asc}} @automatic={{true}} />
       <th>{{i18n "admin.events_integration.event.topics"}}</th>
       {{#if showSelect}}
-        <th>
+        <th class="event-actions">
           {{d-button
             icon="check-square"
             title="admin.events_integration.event.select_all"

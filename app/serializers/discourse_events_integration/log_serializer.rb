@@ -3,7 +3,8 @@
 module DiscourseEventsIntegration
   class LogSerializer < ApplicationSerializer
     attributes :id,
-               :log_type,
+               :level,
+               :context,
                :message,
                :created_at
   end
