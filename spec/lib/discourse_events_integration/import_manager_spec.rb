@@ -31,9 +31,7 @@ describe DiscourseEventsIntegration::ImportManager do
   end
 
   it 'logs imports' do
-    importer = subject.new(provider, source)
-    importer.import
-
+    subject.import_source(source.id)
     expect(DiscourseEventsIntegration::Log.all.first.message).to eq(
       I18n.t('log.import_finished',
         source_name: source.name,
