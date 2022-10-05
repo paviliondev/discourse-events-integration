@@ -17,7 +17,7 @@ module DiscourseEventsIntegration
     end
 
     def log(level, message)
-      Log.create(context: context, level: level, message: message)
+      Log.create(context: context.to_s, level: level.to_s, message: message)
     end
   end
 end
