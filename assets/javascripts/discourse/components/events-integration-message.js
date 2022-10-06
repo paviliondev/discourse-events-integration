@@ -10,6 +10,14 @@ const icons = {
   info: "info-circle",
 };
 
+const urls = {
+  provider: "https://discourse.pluginmanager.org/t/539",
+  source: "https://discourse.pluginmanager.org/t/540",
+  connection: "https://discourse.pluginmanager.org/t/541",
+  event: "https://discourse.pluginmanager.org/t/543",
+  log: "https://discourse.pluginmanager.org/t/543",
+};
+
 export default Component.extend({
   classNameBindings: [":events-integration-message", "message.type", "loading"],
   showDocumentation: not("loading"),
@@ -32,5 +40,13 @@ export default Component.extend({
   @discourseComputed
   documentation() {
     return I18n.t(`admin.events_integration.message.documentation`);
+  },
+
+  @discourseComputed("view")
+  documentationUrl(view) {
+    return (
+      urls[view] ||
+      "https://discourse.pluginmanager.org/c/discourse-events-integration"
+    );
   },
 });
