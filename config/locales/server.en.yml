@@ -3,6 +3,7 @@ en:
     events_integration_enabled: "Enable the Events Integration Plugin."
     update_events_automatically: "Automatically import all sources and sync all connections."
     update_events_automatically_period_mins: "The period in minutes between automatically updating events. NOTE: requires restart."
+    split_event_series_into_different_topics: "A seperate topic will be created for each event in a series."
   log:
     import_finished: "Finished importing from %{source_name}. Retrieved %{events_count} events, created %{created_count} events and updated %{updated_count} events."
     sync_finished: "Finished syncing %{source_name} with %{category_name}. Created %{created_count} topics and updated %{updated_count} topics for the %{client_name} plugin."

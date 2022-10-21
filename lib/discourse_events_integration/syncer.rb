@@ -47,7 +47,18 @@ module DiscourseEventsIntegration
     end
 
     def source_events
-      @source_events ||= Event.where("discourse_events_integration_events.source_id = #{connection.source.id}")
+      @source_events ||= begin
+        events = Event.where("discourse_events_integration_events.source_id = #{connection.source.id}")
+
+        if connection.source.supports_series && !SiteSetting.split_event_series_into_different_topics
+          events = events
+            .select("DISTINCT ON (series_id) discourse_events_integration_events.*")
+            .where("discourse_events_integration_events.start_time > now()")
+            .order("series_id, discourse_events_integration_events.start_time ASC")
+        end
+
+        events
+      end
     end
 
     def log(type, message)

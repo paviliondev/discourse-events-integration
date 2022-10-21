@@ -21,28 +21,30 @@ end
 #
 # Table name: discourse_events_integration_events
 #
-#  id          :bigint           not null, primary key
-#  uid         :string           not null
-#  start_time  :datetime         not null
-#  end_time    :datetime
-#  timezone    :string
-#  name        :string
-#  description :string
-#  status      :string           default("published")
-#  taxonomy    :string
-#  url         :string
-#  source_id   :bigint
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id            :bigint           not null, primary key
+#  uid           :string           not null
+#  start_time    :datetime         not null
+#  end_time      :datetime
+#  name          :string
+#  description   :string
+#  status        :string           default("published")
+#  taxonomy      :string
+#  url           :string
+#  source_id     :bigint
+#  provider_id   :bigint
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  series_id     :string
+#  occurrence_id :string
 #
 # Indexes
 #
-#  index_discourse_events_integration_events_on_post_id    (post_id)
-#  index_discourse_events_integration_events_on_source_id  (source_id)
-#  index_discourse_events_integration_events_on_topic_id   (topic_id)
-#  index_discourse_events_integration_events_on_uid        (uid) UNIQUE
+#  index_discourse_events_integration_events_on_provider_id  (provider_id)
+#  index_discourse_events_integration_events_on_source_id    (source_id)
+#  integration_event_id_index                                (uid,provider_id) UNIQUE
 #
 # Foreign Keys
 #
+#  fk_rails_...  (provider_id => discourse_events_integration_providers.id)
 #  fk_rails_...  (source_id => discourse_events_integration_sources.id)
 #

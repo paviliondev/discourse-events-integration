@@ -4,3 +4,4 @@ discourse_events_integration:
     client: true
   update_events_automatically: false
   update_events_automatically_period_mins: 10
+  split_event_series_into_different_topics: false

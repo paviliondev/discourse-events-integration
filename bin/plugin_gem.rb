@@ -9,12 +9,7 @@ module PluginGem
     spec_path = gems_path + "/specifications"
 
     if opts[:local]
-      spec_file = spec_path + "/omnievent-0.1.0.gemspec" if name.include?('omnievent-0.1.0')
-      spec_file = spec_path + "/omnievent-icalendar-0.1.0.gemspec" if name.include?('omnievent-icalendar-0.1.0')
-      spec_file = spec_path + "/omnievent-eventbrite-0.1.0.gemspec" if name.include?('omnievent-eventbrite-0.1.0')
-      spec_file = spec_path + "/omnievent-meetup-0.1.0.gemspec" if name.include?('omnievent-meetup-0.1.0')
-      spec_file = spec_path + "/omnievent-humanitix-0.1.0.gemspec" if name.include?('omnievent-humanitix-0.1.0')
-      spec_file = spec_path + "/omnievent-eventzilla-0.1.0.gemspec" if name.include?('omnievent-eventzilla-0.1.0')
+      spec_file = spec_path + "/#{File.basename(name, ".gem")}.gemspec"
     else
       spec_file  = spec_path + "/#{name}-#{version}"
       spec_file += "-#{opts[:platform]}" if opts[:platform]

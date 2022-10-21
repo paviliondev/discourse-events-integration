@@ -23,6 +23,12 @@ module DiscourseEventsIntegration
       }
     }
 
+    FIXED_SOURCE_OPTIONS ||= {
+      icalendar: {
+        expand_recurrences: true
+      }
+    }
+
     belongs_to :provider, foreign_key: 'provider_id', class_name: 'DiscourseEventsIntegration::Provider'
 
     has_many :events, foreign_key: 'source_id', class_name: 'DiscourseEventsIntegration::Event'
@@ -42,6 +48,22 @@ module DiscourseEventsIntegration
       else
         {}
       end
+    end
+
+    def source_options_with_fixed
+      opts = source_options_hash
+
+      if fixed_opts = FIXED_SOURCE_OPTIONS[self.provider.provider_type.to_sym]
+        fixed_opts.each do |key, value|
+          opts[key] = value
+        end
+      end
+
+      opts
+    end
+
+    def supports_series
+      self.provider.provider_type.to_sym === :icalendar
     end
 
     private

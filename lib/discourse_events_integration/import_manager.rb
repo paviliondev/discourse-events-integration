@@ -31,6 +31,11 @@ module DiscourseEventsIntegration
           data[:provider_id] = source.provider.id
         end
 
+        if e.metadata.series_id
+          data[:series_id] = e.metadata.series_id
+          data[:occurrence_id] = e.metadata.occurrence_id
+        end
+
         data
       end
 
@@ -72,7 +77,7 @@ module DiscourseEventsIntegration
 
       manager = self.new(source.provider, source)
       manager.import(
-        source.source_options_hash.merge(
+        source.source_options_with_fixed.merge(
           from_time: source.from_time,
           to_time: source.to_time
         )
@@ -84,7 +89,7 @@ module DiscourseEventsIntegration
         if source.ready?
           manager = self.new(source.provider, source)
           manager.import(
-            source.source_options_hash.merge(
+            source.source_options_with_fixed.merge(
               from_time: source.from_time,
               to_time: source.to_time
             )
