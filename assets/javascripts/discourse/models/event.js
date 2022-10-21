@@ -29,8 +29,8 @@ Event.reopenClass({
         let topics = event.topics.map((t) => Topic.create(t));
         return Object.assign(event, { source, topics });
       })
-    )
-  }
+    );
+  },
 });
 
 export default Event;

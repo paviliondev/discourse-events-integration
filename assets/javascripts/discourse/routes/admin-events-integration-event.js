@@ -1,6 +1,5 @@
 import DiscourseRoute from "discourse/routes/discourse";
 import Event from "../models/event";
-import { A } from "@ember/array";
 
 export default DiscourseRoute.extend({
   queryParams: {
@@ -18,7 +17,7 @@ export default DiscourseRoute.extend({
   setupController(controller, model) {
     controller.setProperties({
       page: model.page,
-      events: Event.eventsArray(model.events)
+      events: Event.eventsArray(model.events),
     });
   },
 });
