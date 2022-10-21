@@ -1,7 +1,5 @@
 import DiscourseRoute from "discourse/routes/discourse";
 import Event from "../models/event";
-import Source from "../models/source";
-import Topic from "discourse/models/topic";
 import { A } from "@ember/array";
 
 export default DiscourseRoute.extend({
@@ -20,13 +18,7 @@ export default DiscourseRoute.extend({
   setupController(controller, model) {
     controller.setProperties({
       page: model.page,
-      events: A(
-        model.events.map((event) => {
-          let source = Source.create(event.source);
-          let topics = event.topics.map((t) => Topic.create(t));
-          return Object.assign(event, { source, topics });
-        })
-      ),
+      events: Event.eventsArray(model.events)
     });
   },
 });

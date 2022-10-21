@@ -2,8 +2,8 @@ import Controller from "@ember/controller";
 import { notEmpty } from "@ember/object/computed";
 import showModal from "discourse/lib/show-modal";
 import discourseComputed from "discourse-common/utils/decorators";
-import { A } from "@ember/array";
 import Message from "../mixins/message";
+import { A } from "@ember/array";
 
 export default Controller.extend(Message, {
   hasEvents: notEmpty("events"),
