@@ -10,3 +10,26 @@ module DiscourseEventsIntegration
     belongs_to :post
   end
 end
+
+# == Schema Information
+#
+# Table name: discourse_events_integration_event_connections
+#
+#  id            :bigint           not null, primary key
+#  event_id      :bigint           not null
+#  connection_id :bigint           not null
+#  topic_id      :bigint
+#  post_id       :bigint
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  series_id     :string
+#
+# Indexes
+#
+#  discourse_events_integration_event_connections_event  (event_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (connection_id => discourse_events_integration_connections.id)
+#  fk_rails_...  (event_id => discourse_events_integration_events.id)
+#
