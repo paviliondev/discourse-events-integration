@@ -4,11 +4,12 @@ module DiscourseEventsIntegration
   class Event < ActiveRecord::Base
     self.table_name = 'discourse_events_integration_events'
 
-    UID_TOPIC_CUSTOM_FIELD ||= 'event_uid'
-
     has_many :event_connections, foreign_key: 'event_id', class_name: 'DiscourseEventsIntegration::EventConnection', dependent: :destroy
     has_many :connections, through: :event_connections, source: :connection
     has_many :topics, through: :event_connections
+
+    has_many :series_events, primary_key: "series_id", foreign_key: 'series_id', class_name: 'DiscourseEventsIntegration::EventConnection'
+    has_many :series_events_topics, through: :series_events, source: :topic
 
     belongs_to :source, foreign_key: 'source_id', class_name: 'DiscourseEventsIntegration::Source'
     belongs_to :provider, foreign_key: 'provider_id', class_name: 'DiscourseEventsIntegration::Provider'

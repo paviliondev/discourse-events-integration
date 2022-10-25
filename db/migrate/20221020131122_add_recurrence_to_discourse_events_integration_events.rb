@@ -3,5 +3,6 @@ class AddRecurrenceToDiscourseEventsIntegrationEvents < ActiveRecord::Migration[
   def change
     add_column :discourse_events_integration_events, :series_id, :string
     add_column :discourse_events_integration_events, :occurrence_id, :string
+    add_column :discourse_events_integration_event_connections, :series_id, :string
   end
 end

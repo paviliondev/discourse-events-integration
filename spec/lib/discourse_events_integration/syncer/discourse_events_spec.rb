@@ -35,7 +35,7 @@ describe DiscourseEventsIntegration::DiscourseEventsSyncer do
 
   it 'creates client event data' do
     post = sync_events
-    expect(post.topic.custom_fields[DiscourseEventsIntegration::Event::UID_TOPIC_CUSTOM_FIELD]).to eq(event.uid)
+    expect(post.topic.id).to eq(event.topics.first.id)
 
     events = DiscoursePostEvent::Event.all
     expect(events.size).to eq(1)

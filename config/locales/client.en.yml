@@ -92,6 +92,22 @@ en:
           sync:
             label: Sync
             title: Sync Connection
+          filters:
+            title: Connection Filters
+            label: Filters
+            add:
+              label: Add
+              title: Add a filter
+            done:
+              label: Done
+              title: Close filters
+          filter:
+            query_column:
+              select: Select an attribute...
+            query_value: Enter a value
+            remove:
+              title: Remove filter
+
         event:
           title: Events
           select_all: Select All

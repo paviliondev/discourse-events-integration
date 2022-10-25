@@ -8,6 +8,8 @@ module DiscourseEventsIntegration
                :source_id,
                :client
 
+    has_many :filters, serializer: ConnectionFilterSerializer, embed: :objects
+
     def user
       ConnectionUserSerializer.new(object.user, root: false).as_json
     end

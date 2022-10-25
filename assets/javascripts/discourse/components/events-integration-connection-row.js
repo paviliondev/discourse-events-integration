@@ -2,18 +2,40 @@ import Component from "@ember/component";
 import Connection from "../models/connection";
 import discourseComputed from "discourse-common/utils/decorators";
 import { contentsMap } from "../lib/events-integration";
+import showModal from "discourse/lib/show-modal";
+import { notEmpty } from "@ember/object/computed";
 
 const CLIENTS = ["events", "discourse_events"];
+
+function filtersMatch(filters1, filters2) {
+  if ((filters1 && !filters2) || (!filters1 && filters2)) {
+    return false;
+  }
+
+  if (filters1.length !== filters2.length) {
+    return false;
+  }
+
+  return filters1.every(f1 =>
+    filters2.some(f2 => {
+      return (
+        (f2.query_column === f1.query_column) &&
+        (f2.query_value === f1.query_value)
+      )
+    })
+  );
+}
 
 export default Component.extend({
   tagName: "tr",
   attributeBindings: ["connection.id:data-connection-id"],
   classNames: ["events-integration-connection-row"],
+  hasFilters: notEmpty("connection.filters"),
 
   didReceiveAttrs() {
     this.set(
       "currentConnection",
-      Connection.create(JSON.parse(JSON.stringify(this.connection)))
+      JSON.parse(JSON.stringify(this.connection))
     );
   },
 
@@ -33,17 +55,22 @@ export default Component.extend({
     "connection.source_id",
     "connection.client",
     "connection.from_time",
-    "connection.to_time"
+    "connection.to_time",
+    "connection.filters.[]",
+    "connection.filters.@each.query_column",
+    "connection.filters.@each.query_value"
   )
-  connectionChanged(username, categoryId, sourceId, client, fromTime, toTime) {
+  connectionChanged(username, categoryId, sourceId, client, fromTime, toTime, filters) {
     const cc = this.currentConnection;
     return (
-      cc.get("user.username") !== username ||
+      !cc.user && username ||
+      (cc.user && (cc.user.username !== username)) ||
       cc.category_id !== categoryId ||
       cc.source_id !== sourceId ||
       cc.client !== client ||
       cc.from_time !== fromTime ||
-      cc.to_time !== toTime
+      cc.to_time !== toTime ||
+      !filtersMatch(filters, cc.filters)
     );
   },
 
@@ -54,7 +81,7 @@ export default Component.extend({
     "connection.source_id",
     "connection.client"
   )
-  saveDisabled(connectionChanged, username, categoryId, sourceId, client) {
+  saveDisabled(connectionChanged, username, categoryId, sourceId, client, filters) {
     return (
       !connectionChanged || !username || !categoryId || !sourceId || !client
     );
@@ -77,6 +104,11 @@ export default Component.extend({
     return connectionChanged || loading;
   },
 
+  @discourseComputed("hasFilters")
+  filterClass(hasFilters) {
+    return hasFilters ? "btn-primary" : "";
+  },
+
   actions: {
     updateUser(usernames) {
       const connection = this.connection;
@@ -86,16 +118,33 @@ export default Component.extend({
       connection.set("user.username", usernames[0]);
     },
 
+    openFilters() {
+      const modal = showModal("events-integration-connection-filters", {
+        model: {
+          connection: this.get("connection")
+        }
+      });
+    },
+
     saveConnection() {
-      const connection = JSON.parse(JSON.stringify(this.connection));
+      const connection = this.connection;
 
       if (!connection.source_id) {
         return;
       }
 
+      const data = {
+        id: connection.id,
+        category_id: connection.category_id,
+        client: connection.client,
+        source_id: connection.source_id,
+        user: connection.user,
+        filters: JSON.parse(JSON.stringify(connection.filters))
+      };
+
       this.set("loading", true);
 
-      Connection.update(connection)
+      Connection.update(data)
         .then((result) => {
           if (result) {
             this.setProperties({

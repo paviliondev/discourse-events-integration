@@ -1,8 +1,11 @@
 import EmberObject from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
+import { A } from "@ember/array";
 
-const Connection = EmberObject.extend();
+const Connection = EmberObject.extend({
+  filters: A()
+});
 
 Connection.reopenClass({
   all() {
@@ -12,9 +15,8 @@ Connection.reopenClass({
   update(connection) {
     return ajax(`/admin/events-integration/connection/${connection.id}`, {
       type: "PUT",
-      data: {
-        connection,
-      },
+      contentType: "application/json",
+      data: JSON.stringify({ connection }),
     }).catch(popupAjaxError);
   },
 

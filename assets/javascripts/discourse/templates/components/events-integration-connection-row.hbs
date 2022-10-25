@@ -38,6 +38,14 @@
     )}}
 </td>
 
+<td>
+  {{d-button
+    icon="filter"
+    title="admin.events_integration.connection.filters.title"
+    action=(action "openFilters")
+    class=filterClass}}
+</td>
+
 <td class="action-column">
   {{conditional-loading-spinner condition=loading size="small"}}
 

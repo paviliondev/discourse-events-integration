@@ -8,6 +8,7 @@ module DiscourseEventsIntegration
 
     has_many :event_connections, foreign_key: 'connection_id', class_name: 'DiscourseEventsIntegration::EventConnection', dependent: :destroy
     has_many :events, through: :event_connections, source: :event
+    has_many :filters, foreign_key: 'connection_id', class_name: 'DiscourseEventsIntegration::ConnectionFilter', dependent: :destroy
 
     belongs_to :user
     belongs_to :category

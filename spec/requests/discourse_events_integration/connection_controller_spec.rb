@@ -91,4 +91,47 @@ describe DiscourseEventsIntegration::ConnectionController do
 
     expect(response.status).to eq(200)
   end
+
+  it "creates filters" do
+    put "/admin/events-integration/connection/#{connection.id}.json", params: {
+      connection: {
+        client: "discourse_events",
+        filters: [
+          {
+            id: "new",
+            query_column: "name",
+            query_value: "Development"
+          }
+        ]
+      }
+    }
+    expect(response.status).to eq(200)
+
+    connection.reload
+    expect(connection.filters.first.query_column).to eq("name")
+    expect(connection.filters.first.query_value).to eq("Development")
+  end
+
+  it "updates filters" do
+    filter1 = Fabricate(:discourse_events_integration_connection_filter, connection: connection)
+    filter2 = Fabricate(:discourse_events_integration_connection_filter, connection: connection)
+
+    put "/admin/events-integration/connection/#{connection.id}.json", params: {
+      connection: {
+        client: "discourse_events",
+        filters: [
+          {
+            id: filter1.id,
+            query_column: filter1.query_column,
+            query_value: "New Value"
+          }
+        ]
+      }
+    }
+    expect(response.status).to eq(200)
+
+    connection.reload
+    expect(connection.filters.size).to eq(1)
+    expect(connection.filters.first.query_value).to eq("New Value")
+  end
 end

@@ -29,7 +29,6 @@ describe DiscourseEventsIntegration::EventsSyncer do
   it 'creates client event data' do
     topic = sync_events
 
-    expect(topic.custom_fields[DiscourseEventsIntegration::Event::UID_TOPIC_CUSTOM_FIELD]).to eq(event.uid)
     expect(topic.custom_fields['event_start']).to eq(event.start_time.to_i)
     expect(topic.custom_fields['event_end']).to eq(event.end_time.to_i)
   end

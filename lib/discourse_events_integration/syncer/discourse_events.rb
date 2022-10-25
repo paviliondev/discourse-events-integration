@@ -9,62 +9,23 @@ module DiscourseEventsIntegration
         ::SiteSetting.discourse_post_event_enabled
     end
 
-    def update_events
-      topics_updated = []
-
-      synced_events.includes(event_connections: [:topic, :post]).each do |event|
-        ActiveRecord::Base.transaction do
-          # No validations or callbacks can be triggered when updating this data
-          event.event_connections.each do |ec|
-            ec.topic.update_columns(title: event.name)
-            ec.post.update_columns(raw: post_raw(event))
-
-            if ec.post.event
-              ec.post.event.update_columns(original_starts_at: event.start_time, original_ends_at: event.end_time, url: event.url)
-              ec.post.event.event_dates.first.update_columns(starts_at: event.start_time, ends_at: event.end_time)
-            end
-            ec.post.trigger_post_process(bypass_bump: true, priority: :low)
-
-            topics_updated << ec.topic_id
-          end
-        end
-      end
-
-      topics_updated
+    def create_event_topic(event)
+      post = create_event_post(event)
+      post.topic
     end
 
-    def create_events
-      topics_created = []
+    def update_event_topic(topic, event)
+      # No validations or callbacks can be triggered when updating this data
+      topic.update_columns(title: event.name)
+      topic.first_post.update_columns(raw: post_raw(event))
 
-      unsynced_events.each do |event|
-        ActiveRecord::Base.transaction do
-          post = PostCreator.create!(
-            user,
-            topic_opts: {
-              title: event.name,
-              category: connection.category.id,
-              custom_fields: {
-                "#{Event::UID_TOPIC_CUSTOM_FIELD}": event.uid
-              }
-            },
-            raw: post_raw(event),
-            skip_validations: true
-          )
-
-          raise ActiveRecord::Rollback unless post.present?
-
-          EventConnection.create!(
-            event_id: event.id,
-            connection_id: connection.id,
-            topic_id: post.topic_id,
-            post_id: post.id
-          )
-
-          topics_created << post.topic_id
-        end
+      if topic.first_post.event
+        topic.first_post.event.update_columns(original_starts_at: event.start_time, original_ends_at: event.end_time, url: event.url)
+        topic.first_post.event.event_dates.first.update_columns(starts_at: event.start_time, ends_at: event.end_time)
       end
+      topic.first_post.trigger_post_process(bypass_bump: true, priority: :low)
 
-      topics_created
+      topic
     end
 
     def post_raw(event)

@@ -19,7 +19,8 @@ gem "time", "0.2.0"
 gem "stringio", "3.0.2"
 gem "open-uri", "0.2.0"
 gem "omnievent", "0.1.0.pre3", require_name: "omnievent"
-gem "omnievent-icalendar", "0.1.0.pre2", require_name: "omnievent/icalendar"
+#gem "omnievent-icalendar", "0.1.0.pre2", require_name: "omnievent/icalendar"
+gem "/Users/angus/omnievent/omnievent-icalendar/omnievent-icalendar-0.1.0.pre2.gem", "0.1.0.pre2", local: true, require_name: "omnievent/icalendar"
 gem "omnievent-api", "0.1.0.pre2", require_name: "omnievent/api"
 gem "omnievent-eventbrite", "0.1.0.pre2", require_name: "omnievent/eventbrite"
 gem "omnievent-eventzilla", "0.1.0.pre2", require_name: "omnievent/eventzilla"
@@ -40,6 +41,7 @@ after_initialize do
     ../lib/discourse_events_integration/auth/base.rb
     ../lib/discourse_events_integration/auth/meetup.rb
     ../app/models/discourse_events_integration/event_connection.rb
+    ../app/models/discourse_events_integration/connection_filter.rb
     ../app/models/discourse_events_integration/connection.rb
     ../app/models/discourse_events_integration/event.rb
     ../app/models/discourse_events_integration/log.rb
@@ -55,8 +57,9 @@ after_initialize do
     ../app/controllers/discourse_events_integration/log_controller.rb
     ../app/controllers/discourse_events_integration/provider_controller.rb
     ../app/controllers/discourse_events_integration/source_controller.rb
-    ../app/serializers/discourse_events_integration/connection_serializer.rb
     ../app/serializers/discourse_events_integration/connection_user_serializer.rb
+    ../app/serializers/discourse_events_integration/connection_filter_serializer.rb
+    ../app/serializers/discourse_events_integration/connection_serializer.rb
     ../app/serializers/discourse_events_integration/source_serializer.rb
     ../app/serializers/discourse_events_integration/event_serializer.rb
     ../app/serializers/discourse_events_integration/log_serializer.rb
