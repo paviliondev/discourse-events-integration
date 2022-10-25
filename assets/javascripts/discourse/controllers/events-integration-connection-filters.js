@@ -6,8 +6,8 @@ import ConnectionFilter from "../models/connection-filter";
 const QUERY_COLUMNS = [
   {
     name: "Event Name",
-    id: "name"
-  }
+    id: "name",
+  },
 ];
 
 export default Controller.extend(ModalFunctionality, {
@@ -19,11 +19,11 @@ export default Controller.extend(ModalFunctionality, {
   actions: {
     addFilter() {
       const filter = ConnectionFilter.create({ id: "new" });
-      this.model.connection.get('filters').pushObject(filter);
+      this.model.connection.get("filters").pushObject(filter);
     },
 
     removeFilter(filter) {
-      this.model.connection.get('filters').removeObject(filter);
-    }
+      this.model.connection.get("filters").removeObject(filter);
+    },
   },
 });

@@ -4,7 +4,7 @@ import { popupAjaxError } from "discourse/lib/ajax-error";
 import { A } from "@ember/array";
 
 const Connection = EmberObject.extend({
-  filters: A()
+  filters: A(),
 });
 
 Connection.reopenClass({

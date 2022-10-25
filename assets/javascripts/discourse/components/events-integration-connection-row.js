@@ -16,11 +16,10 @@ function filtersMatch(filters1, filters2) {
     return false;
   }
 
-  return filters1.every(f1 =>
-    filters2.some(f2 => {
+  return filters1.every((f1) =>
+    filters2.some((f2) => {
       return (
-        (f2.query_column === f1.query_column) &&
-        (f2.query_value === f1.query_value)
+        f2.query_column === f1.query_column && f2.query_value === f1.query_value
       );
     })
   );
@@ -33,10 +32,7 @@ export default Component.extend({
   hasFilters: notEmpty("connection.filters"),
 
   didReceiveAttrs() {
-    this.set(
-      "currentConnection",
-      JSON.parse(JSON.stringify(this.connection))
-    );
+    this.set("currentConnection", JSON.parse(JSON.stringify(this.connection)));
   },
 
   willDestroyElement() {
@@ -60,11 +56,19 @@ export default Component.extend({
     "connection.filters.@each.query_column",
     "connection.filters.@each.query_value"
   )
-  connectionChanged(username, categoryId, sourceId, client, fromTime, toTime, filters) {
+  connectionChanged(
+    username,
+    categoryId,
+    sourceId,
+    client,
+    fromTime,
+    toTime,
+    filters
+  ) {
     const cc = this.currentConnection;
     return (
-      !cc.user && username ||
-      (cc.user && (cc.user.username !== username)) ||
+      (!cc.user && username) ||
+      (cc.user && cc.user.username !== username) ||
       cc.category_id !== categoryId ||
       cc.source_id !== sourceId ||
       cc.client !== client ||
@@ -121,8 +125,8 @@ export default Component.extend({
     openFilters() {
       showModal("events-integration-connection-filters", {
         model: {
-          connection: this.get("connection")
-        }
+          connection: this.get("connection"),
+        },
       });
     },
 
@@ -139,7 +143,7 @@ export default Component.extend({
         client: connection.client,
         source_id: connection.source_id,
         user: connection.user,
-        filters: JSON.parse(JSON.stringify(connection.filters))
+        filters: JSON.parse(JSON.stringify(connection.filters)),
       };
 
       this.set("loading", true);
