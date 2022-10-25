@@ -1,7 +1,6 @@
 import Controller from "@ember/controller";
 import ModalFunctionality from "discourse/mixins/modal-functionality";
 import discourseComputed from "discourse-common/utils/decorators";
-import Event from "../models/event";
 import ConnectionFilter from "../models/connection-filter";
 
 const QUERY_COLUMNS = [

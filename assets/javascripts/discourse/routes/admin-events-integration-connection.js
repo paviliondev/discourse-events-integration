@@ -16,7 +16,7 @@ export default DiscourseRoute.extend({
           if (c.filters) {
             c.filters = A(
               c.filters.map((f) => {
-                return ConnectionFilter.create(f)
+                return ConnectionFilter.create(f);
               })
             );
           }

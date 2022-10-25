@@ -21,7 +21,7 @@ function filtersMatch(filters1, filters2) {
       return (
         (f2.query_column === f1.query_column) &&
         (f2.query_value === f1.query_value)
-      )
+      );
     })
   );
 }
@@ -81,7 +81,7 @@ export default Component.extend({
     "connection.source_id",
     "connection.client"
   )
-  saveDisabled(connectionChanged, username, categoryId, sourceId, client, filters) {
+  saveDisabled(connectionChanged, username, categoryId, sourceId, client) {
     return (
       !connectionChanged || !username || !categoryId || !sourceId || !client
     );
@@ -119,7 +119,7 @@ export default Component.extend({
     },
 
     openFilters() {
-      const modal = showModal("events-integration-connection-filters", {
+      showModal("events-integration-connection-filters", {
         model: {
           connection: this.get("connection")
         }
