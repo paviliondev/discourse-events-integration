@@ -17,10 +17,8 @@ module DiscourseEventsIntegration
       meetup: {
         'group_urlname': /[a-z]/
       },
-      humanitix: {
-      },
-      eventzilla: {
-      }
+      humanitix: {},
+      eventzilla: {}
     }
 
     FIXED_SOURCE_OPTIONS ||= {

@@ -5,6 +5,22 @@ require "rails_helper"
 describe DiscourseEventsIntegration::Syncer do
   subject { DiscourseEventsIntegration::Syncer }
 
+  DiscourseEventsIntegration::Syncer.class_eval do
+    def create_event_topic(event)
+      create_event_post(event).topic
+    end
+
+    def update_event_topic(topic, event)
+      topic.update_columns(title: event.name)
+      topic.first_post.update_columns(raw: post_raw(event))
+      topic
+    end
+
+    def post_raw(event)
+      event.description
+    end
+  end
+
   fab!(:source) { Fabricate(:discourse_events_integration_source) }
   fab!(:category) { Fabricate(:category) }
   fab!(:user) { Fabricate(:user) }
@@ -35,7 +51,17 @@ describe DiscourseEventsIntegration::Syncer do
     end
 
     context "when source supports event series" do
+      let(:first_start_time) { 2.days.from_now }
+      let(:second_start_time) { 4.days.from_now }
+
       before do
+        freeze_time
+
+        event1.start_time = first_start_time
+        event1.save
+        event2.start_time = second_start_time
+        event2.save
+
         connection.source.stubs(:supports_series).returns(true)
       end
 
@@ -47,16 +73,6 @@ describe DiscourseEventsIntegration::Syncer do
       end
 
       it "sources series events" do
-        freeze_time
-
-        first_start_time = 2.days.from_now
-        second_start_time = 4.days.from_now
-
-        event1.start_time = first_start_time
-        event1.save
-        event2.start_time = second_start_time
-        event2.save
-
         syncer = subject.new(user, connection)
         expect(syncer.series_events.size).to eq(1)
         expect(syncer.series_events.first.start_time).to be_within(1.second).of(first_start_time)
@@ -66,6 +82,22 @@ describe DiscourseEventsIntegration::Syncer do
         syncer = subject.new(user, connection)
         expect(syncer.series_events.size).to eq(1)
         expect(syncer.series_events.first.start_time).to be_within(1.second).of(second_start_time)
+      end
+
+      it "creates series event topics" do
+        syncer = subject.new(user, connection)
+        result = syncer.update_series_events_topics
+
+        expect(result[:created_topics].size).to eq(1)
+        expect(event1.event_connections.first.topic_id).to eq(result[:created_topics].first)
+      end
+
+      it "only creates one event connection per series topic" do
+        syncer = subject.new(user, connection)
+        syncer.update_series_events_topics
+        syncer.update_series_events_topics
+
+        expect(event1.event_connections.size).to eq(1)
       end
     end
   end

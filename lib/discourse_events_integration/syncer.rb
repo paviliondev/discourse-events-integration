@@ -86,7 +86,7 @@ module DiscourseEventsIntegration
         ActiveRecord::Base.transaction do
           if topics.exists?
             topic = topics.first
-            create_event_connection(event, topic)
+            ensure_event_connection(event, topic)
             topics_updated << _update_event_topic(topic, event)
           else
             topics_created << _create_event_topic(event)
@@ -175,6 +175,12 @@ module DiscourseEventsIntegration
       end
 
       EventConnection.create!(params)
+    end
+
+    def ensure_event_connection(event, topic)
+      unless EventConnection.exists?(event_id: event.id, topic_id: topic.id, connection_id: connection.id)
+        create_event_connection(event, topic)
+      end
     end
 
     def one_topic_per_series
