@@ -101,14 +101,43 @@
   }
 
   .events-integration-connection-row {
-    .select-kit,
-    .select-kit.category-chooser,
     .select-kit.multi-select {
-      width: 190px;
+      width: 150px;
+    }
+
+    .select-kit {
+      width: 180px;
+    }
+
+    .select-kit.category-chooser {
+      width: 230px;
     }
 
     .d-date-input {
       min-width: 110px;
+    }
+
+    &.has-child-category {
+      .category-chooser {
+        .select-kit-selected-name {
+          .name {
+            display: flex;
+            align-items: center;
+
+            > span:first-of-type {
+              margin: 0;
+
+              .badge-category-bg {
+                margin: 1px 0 0 0;
+              }
+
+              .badge-category {
+                display: none;
+              }
+            }
+          }
+        }
+      }
     }
   }
 

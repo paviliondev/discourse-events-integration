@@ -3,7 +3,7 @@ import Connection from "../models/connection";
 import discourseComputed from "discourse-common/utils/decorators";
 import { contentsMap } from "../lib/events-integration";
 import showModal from "discourse/lib/show-modal";
-import { notEmpty } from "@ember/object/computed";
+import { notEmpty, readOnly } from "@ember/object/computed";
 
 const CLIENTS = ["events", "discourse_events"];
 
@@ -28,8 +28,12 @@ function filtersMatch(filters1, filters2) {
 export default Component.extend({
   tagName: "tr",
   attributeBindings: ["connection.id:data-connection-id"],
-  classNames: ["events-integration-connection-row"],
+  classNameBindings: [
+    ":events-integration-connection-row",
+    "hasChildCategory:has-child-category",
+  ],
   hasFilters: notEmpty("connection.filters"),
+  hasChildCategory: readOnly("connection.category.parent_category_id"),
 
   didReceiveAttrs() {
     this.set("currentConnection", JSON.parse(JSON.stringify(this.connection)));
