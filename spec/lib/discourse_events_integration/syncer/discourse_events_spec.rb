@@ -72,4 +72,20 @@ describe DiscourseEventsIntegration::DiscourseEventsSyncer do
     expect(event_dates.first.starts_at).to be_within(1.second).of(new_start_time)
     expect(event_dates.first.ends_at).to be_within(1.second).of(new_end_time)
   end
+
+  it "does not add end time if same as start time" do
+    event.start_time = event.end_time
+    event.save!
+
+    post = sync_events
+
+    expect(post.raw.include?("end=")).to eq(false)
+
+    events = DiscoursePostEvent::Event.all
+    expect(events.size).to eq(1)
+    expect(events.first.original_ends_at).to be(nil)
+
+    event_dates = DiscoursePostEvent::EventDate.all
+    expect(event_dates.first.ends_at).to be(nil)
+  end
 end
