@@ -24,22 +24,55 @@ describe DiscourseEventsIntegration::Syncer do
   fab!(:source) { Fabricate(:discourse_events_integration_source) }
   fab!(:category) { Fabricate(:category) }
   fab!(:user) { Fabricate(:user) }
+  fab!(:admin) { Fabricate(:user, admin: true) }
   fab!(:connection) { Fabricate(:discourse_events_integration_connection, source: source, category: category, user: user) }
   fab!(:event1) { Fabricate(:discourse_events_integration_event, source: source, series_id: "ABC", occurrence_id: "1") }
   fab!(:event2) { Fabricate(:discourse_events_integration_event, source: source, series_id: "ABC", occurrence_id: "2") }
 
-  it 'returns ids of created and updated topics' do
-    syncer = subject.new(user, connection)
-    syncer.stubs(:create_events).returns([1])
-    syncer.stubs(:update_events).returns([2, 3])
-    result = syncer.sync
+  describe "sync" do
+    def sync_events(opts = {})
+      syncer = subject.new(user, connection)
+      syncer.sync(opts)
 
-    expect(result).to eq(
-      {
-        created_topics: [1],
-        updated_topics: [2, 3]
-      }
-    )
+      event1.reload
+      event2.reload
+    end
+
+    it 'syncs event data' do
+      sync_events
+
+      expect(event1.topics.first.title).to eq(event1.name)
+    end
+
+    it 'updates event data' do
+      new_name = "New event name"
+      event1.name = new_name
+      event1.save!
+
+      sync_events
+
+      expect(event1.topics.first.title).to eq(new_name)
+    end
+
+    it 'prevents the post from being edited by anyone' do
+      sync_events
+
+      expect(Guardian.new(admin).can_edit_post?(event1.topics.first.first_post)).to eq(false)
+    end
+
+    it 'returns ids of created and updated topics' do
+      syncer = subject.new(user, connection)
+      syncer.stubs(:create_events).returns([1])
+      syncer.stubs(:update_events).returns([2, 3])
+      result = syncer.sync
+
+      expect(result).to eq(
+        {
+          created_topics: [1],
+          updated_topics: [2, 3]
+        }
+      )
+    end
   end
 
   context "with event series" do

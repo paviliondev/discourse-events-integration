@@ -64,5 +64,9 @@ after_initialize do
     ../app/serializers/discourse_events_integration/log_serializer.rb
     ../app/serializers/discourse_events_integration/provider_serializer.rb
     ../config/routes.rb
+    ../extensions/guardian.rb
   ].each { |path| load File.expand_path(path, __FILE__) }
+
+  Post.has_one :event_connection, class_name: 'DiscourseEventsIntegration::EventConnection'
+  Guardian.prepend EventsIntegrationGuardianExtension
 end
