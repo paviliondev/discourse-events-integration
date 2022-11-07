@@ -34,6 +34,8 @@ describe DiscourseEventsIntegration::SyncManager do
     fab!(:event2) { Fabricate(:discourse_events_integration_event, source: source, series_id: "ABC", occurrence_id: "2") }
 
     before do
+      skip("Client not installed") unless DiscourseEventsIntegration::EventsSyncer.ready?
+
       DiscourseEventsIntegration::Source.any_instance.stubs(:supports_series).returns(true)
       SiteSetting.split_event_series_into_different_topics = false
     end
@@ -50,6 +52,7 @@ describe DiscourseEventsIntegration::SyncManager do
       event2.save
 
       result = subject.sync_connection(connection.id)
+      expect(result).not_to eq(false)
       expect(result[:created_topics].size).to eq(2)
       expect(result[:updated_topics].size).to eq(0)
       expect(result[:created_topics]).to include(event1.reload.topics.first.id)
