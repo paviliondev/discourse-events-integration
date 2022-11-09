@@ -8,7 +8,7 @@
     {{/each}}
   </ul>
   <div class="topics-control">
-    <Input @type="checkbox" class="destroy-topics" @checked={{destroyTopics}} {{on "change" (action "toggleDestroyTopics")}} />
+    <Input @type="checkbox" class="destroy-topics" @checked={{destroyTopics}} />
     {{I18n "admin.events_integration.event.delete.topics"}}
   </div>
 </DModalBody>

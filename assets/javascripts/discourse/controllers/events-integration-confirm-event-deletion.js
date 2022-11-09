@@ -17,10 +17,6 @@ export default Controller.extend(ModalFunctionality, {
   },
 
   actions: {
-    toggleDestroyTopics() {
-      this.toggleProperty("destroyTopics");
-    },
-
     delete() {
       const events = this.model.events;
       const eventIds = events.map((e) => e.id);
