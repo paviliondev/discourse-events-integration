@@ -26,7 +26,7 @@ Event.reopenClass({
     return A(
       events.map((event) => {
         let source = Source.create(event.source);
-        let topics = event.topics.map((t) => Topic.create(t));
+        let topics = A(event.topics.map((t) => Topic.create(t)));
         return Object.assign(event, { source, topics });
       })
     );

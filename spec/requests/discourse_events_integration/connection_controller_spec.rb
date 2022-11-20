@@ -19,6 +19,19 @@ describe DiscourseEventsIntegration::ConnectionController do
     expect(response.parsed_body['sources'].first['name']).to eq(connection.source.name)
   end
 
+  it "lists clients" do
+    SiteSetting.calendar_enabled = true
+    SiteSetting.discourse_post_event_enabled = true
+
+    skip("Events Syncer not installed") unless DiscourseEventsIntegration::EventsSyncer.ready?
+    skip("Discourse Events Syncer not installed") unless DiscourseEventsIntegration::DiscourseEventsSyncer.ready?
+
+    get "/admin/events-integration/connection.json"
+
+    expect(response.status).to eq(200)
+    expect(response.parsed_body["clients"]).to match_array(["discourse_events", "events"])
+  end
+
   it "creates connections" do
     put "/admin/events-integration/connection/new.json", params: {
       connection: {

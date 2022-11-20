@@ -51,8 +51,25 @@ export default Controller.extend(Message, {
       });
 
       modal.setProperties({
-        onDestroyEvents: (destroyedEvents) => {
-          this.get("events").removeObjects(destroyedEvents);
+        onDestroyEvents: (
+          destroyedEvents = null,
+          destroyedTopicsEvents = null
+        ) => {
+          if (destroyedEvents) {
+            this.get("events").removeObjects(destroyedEvents);
+          }
+
+          if (destroyedTopicsEvents) {
+            const destroyedTopicsEventIds = destroyedTopicsEvents.map(
+              (e) => e.id
+            );
+
+            this.get("events").forEach((event) => {
+              if (destroyedTopicsEventIds.includes(event.id)) {
+                event.set("topics", null);
+              }
+            });
+          }
         },
         onCloseModal: () => {
           this.set("showSelect", false);

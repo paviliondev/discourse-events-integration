@@ -5,6 +5,13 @@
     class="provider-name"}}
 </td>
 
+<td class="url-column">
+  {{input
+    value=provider.url
+    placeholder=(i18n "admin.events_integration.provider.url.placeholder")
+    class="provider-name"}}
+</td>
+
 <td>
   {{combo-box
     value=provider.provider_type
@@ -48,11 +55,9 @@
 
 <td class="status-column">
   {{#if provider.authenticated}}
-    <span class="status authenticated"></span>
-    <span>{{i18n "admin.events_integration.provider.ready"}}</span>
+    <span class="status authenticated" title={{i18n "admin.events_integration.provider.ready"}}></span>
   {{else}}
-    <span class="status not-authenticated"></span>
-    <span>{{i18n "admin.events_integration.provider.not_ready"}}</span>
+    <span class="status not-authenticated" title={{i18n "admin.events_integration.provider.not_ready"}}></span>
   {{/if}}
 </td>
 

@@ -7,7 +7,8 @@ module DiscourseEventsIntegration
 
       render_json_dump(
         connections: serialize_data(connections, ConnectionSerializer, root: false),
-        sources: serialize_data(Source.all, SourceSerializer, root: false)
+        sources: serialize_data(Source.all, SourceSerializer, root: false),
+        clients: DiscourseEventsIntegration::Connection.available_clients
       )
     end
 

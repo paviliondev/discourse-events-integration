@@ -2,27 +2,36 @@ import Controller from "@ember/controller";
 import ModalFunctionality from "discourse/mixins/modal-functionality";
 import discourseComputed from "discourse-common/utils/decorators";
 import Event from "../models/event";
+import I18n from "I18n";
+
+const DELETE_TARGETS = ["events_only", "events_and_topics", "topics_only"];
 
 export default Controller.extend(ModalFunctionality, {
+  deleteTargets: DELETE_TARGETS.map((t) => ({
+    id: t,
+    name: I18n.t(`admin.events_integration.event.delete.${t}`),
+  })),
+  deleteTarget: "events_only",
+
   @discourseComputed("model.events")
   eventCount(events) {
     return events.length;
   },
 
-  @discourseComputed("destroyTopics")
-  btnLabel(destroyTopics) {
-    return destroyTopics
-      ? "admin.events_integration.event.delete.label_with_topics"
-      : "admin.events_integration.event.delete.label";
+  @discourseComputed("deleteTarget")
+  btnLabel(deleteTarget) {
+    return `admin.events_integration.event.delete.${deleteTarget}_btn`;
   },
 
   actions: {
     delete() {
       const events = this.model.events;
       const eventIds = events.map((e) => e.id);
+      const target = this.deleteTarget;
+
       const opts = {
         event_ids: eventIds,
-        destroy_topics: this.destroyTopics,
+        target,
       };
 
       this.set("destroying", true);
@@ -31,7 +40,10 @@ export default Controller.extend(ModalFunctionality, {
         .then((result) => {
           if (result.success) {
             this.onDestroyEvents(
-              events.filter((e) => result.destroyed_ids.includes(e.id))
+              events.filter((e) => result.destroyed_event_ids.includes(e.id)),
+              events.filter((e) =>
+                result.destroyed_topics_event_ids.includes(e.id)
+              )
             );
             this.onCloseModal();
             this.send("closeModal");

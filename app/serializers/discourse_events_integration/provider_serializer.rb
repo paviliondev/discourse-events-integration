@@ -5,6 +5,7 @@ module DiscourseEventsIntegration
     attributes :id,
                :name,
                :provider_type,
+               :url,
                :username,
                :password,
                :token,

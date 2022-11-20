@@ -8,6 +8,8 @@ module DiscourseEventsIntegration
     belongs_to :event, foreign_key: 'event_id', class_name: 'DiscourseEventsIntegration::Event'
     belongs_to :topic
     belongs_to :post
+
+    validates :client, inclusion: { in: Connection.client_names, message: "%{value} is not a valid connection client" }
   end
 end
 

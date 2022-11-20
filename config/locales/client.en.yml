@@ -1,4 +1,10 @@
 en:
+  js:
+    post:
+      event:
+        manage:
+          label: Manage Event
+          title: Manage event on event provider.
   admin_js:
     admin:
       site_settings:
@@ -46,6 +52,9 @@ en:
           name:
             label: Name
             placeholder: underscored
+          url:
+            label: URL
+            placeholder: admin url
           provider_type:
             label: Type
             select: Select a type...
@@ -118,13 +127,14 @@ en:
           topics: Topics
           none: No events.
           delete:
-            label: Delete Events
-            label_with_topics: Delete Events and Topics
-            title: Delete Selected Events
-            confirm:
-              one: "Are you sure you want to delete the event you've selected?"
-              other: "Are you sure you want to delete the %{count} events you've selected?"
-            topics: Also delete associated topics and posts.
+            title: Delete Events and Topics
+            label: Delete
+            events_only: Delete events only
+            events_and_topics: Delete events and associated topics
+            topics_only: Delete topics only
+            events_only_btn: Delete Events
+            events_and_topics_btn: Delete Events and Topics
+            topics_only_btn: Delete Topics
         log:
           title: Logs
           created_at: Created At

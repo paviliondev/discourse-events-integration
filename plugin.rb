@@ -39,10 +39,10 @@ after_initialize do
     ../lib/discourse_events_integration/syncer/events.rb
     ../lib/discourse_events_integration/auth/base.rb
     ../lib/discourse_events_integration/auth/meetup.rb
-    ../app/models/discourse_events_integration/event_connection.rb
     ../app/models/discourse_events_integration/connection_filter.rb
     ../app/models/discourse_events_integration/connection.rb
     ../app/models/discourse_events_integration/event.rb
+    ../app/models/discourse_events_integration/event_connection.rb
     ../app/models/discourse_events_integration/log.rb
     ../app/models/discourse_events_integration/provider.rb
     ../app/models/discourse_events_integration/source.rb
@@ -60,13 +60,43 @@ after_initialize do
     ../app/serializers/discourse_events_integration/connection_filter_serializer.rb
     ../app/serializers/discourse_events_integration/connection_serializer.rb
     ../app/serializers/discourse_events_integration/source_serializer.rb
+    ../app/serializers/discourse_events_integration/basic_event_serializer.rb
     ../app/serializers/discourse_events_integration/event_serializer.rb
+    ../app/serializers/discourse_events_integration/post_event_serializer.rb
     ../app/serializers/discourse_events_integration/log_serializer.rb
     ../app/serializers/discourse_events_integration/provider_serializer.rb
     ../config/routes.rb
     ../extensions/guardian.rb
   ].each { |path| load File.expand_path(path, __FILE__) }
 
-  Post.has_one :event_connection, class_name: 'DiscourseEventsIntegration::EventConnection'
+  Post.has_one :event_connection, class_name: 'DiscourseEventsIntegration::EventConnection', dependent: :destroy
   Guardian.prepend EventsIntegrationGuardianExtension
+
+  TopicView.attr_writer :posts
+  TopicView.on_preload do |topic_view|
+    if SiteSetting.events_integration_enabled
+      topic_view.posts = topic_view.posts.includes({ event_connection: :event })
+    end
+  end
+
+  # The discourse-calendar plugin uses "event" on the post model
+  add_to_serializer(:post, :integration_event) do
+    DiscourseEventsIntegration::PostEventSerializer.new(object.event_connection.event, scope: scope, root: false).as_json
+  end
+  add_to_serializer(:post, :include_integration_event?) do
+    SiteSetting.events_integration_enabled && object.event_connection.present?
+  end
+
+  add_to_class(:guardian, :can_manage_events?) do
+    return false unless SiteSetting.events_integration_enabled
+
+    is_admin? || (
+      SiteSetting.allow_moderator_event_management &&
+      is_staff?
+    )
+  end
+
+  add_to_serializer(:current_user, :can_manage_events) do
+    scope.can_manage_events?
+  end
 end

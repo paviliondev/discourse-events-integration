@@ -3,6 +3,7 @@ import Connection from "../models/connection";
 import ConnectionFilter from "../models/connection-filter";
 import Source from "../models/source";
 import { A } from "@ember/array";
+import { contentsMap } from "../lib/events-integration";
 
 export default DiscourseRoute.extend({
   model() {
@@ -24,6 +25,7 @@ export default DiscourseRoute.extend({
         })
       ),
       sources: A(model.sources.map((s) => Source.create(s))),
+      clients: contentsMap(model.clients),
     });
   },
 });

@@ -55,7 +55,7 @@ module DiscourseEventsIntegration
 
       synced_events.includes(event_connections: [:topic, :post]).each do |event|
         ActiveRecord::Base.transaction do
-          event.event_connections.each do |ec|
+          event.event_connections.where(client: connection.client).each do |ec|
             topics_updated << _update_event_topic(ec.topic, event)
           end
         end
@@ -167,7 +167,8 @@ module DiscourseEventsIntegration
         event_id: event.id,
         connection_id: connection.id,
         topic_id: topic.id,
-        post_id: topic.first_post.id
+        post_id: topic.first_post.id,
+        client: connection.client
       }
 
       if event.series_id

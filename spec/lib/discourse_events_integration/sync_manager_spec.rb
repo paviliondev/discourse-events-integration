@@ -29,6 +29,25 @@ describe DiscourseEventsIntegration::SyncManager do
     expect(topic.id).to eq(event.topics.first.id)
   end
 
+  it 'does not sync a connection if the client changes' do
+    SiteSetting.calendar_enabled = true
+    SiteSetting.discourse_post_event_enabled = true
+
+    skip("Events Syncer not installed") unless DiscourseEventsIntegration::EventsSyncer.ready?
+    skip("Discourse Events Syncer not installed") unless DiscourseEventsIntegration::DiscourseEventsSyncer.ready?
+
+    result = subject.sync_connection(connection.id)
+    expect(result).not_to eq(false)
+    expect(result[:created_topics].size).to eq(1)
+
+    connection.client = "discourse_events"
+    connection.save!
+
+    result = subject.sync_connection(connection.id)
+    expect(result).not_to eq(false)
+    expect(result[:updated_topics].size).to eq(0)
+  end
+
   context "with event series" do
     fab!(:event1) { Fabricate(:discourse_events_integration_event, source: source, series_id: "ABC", occurrence_id: "1") }
     fab!(:event2) { Fabricate(:discourse_events_integration_event, source: source, series_id: "ABC", occurrence_id: "2") }

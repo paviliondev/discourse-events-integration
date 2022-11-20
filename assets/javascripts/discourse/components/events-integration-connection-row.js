@@ -1,11 +1,8 @@
 import Component from "@ember/component";
 import Connection from "../models/connection";
 import discourseComputed from "discourse-common/utils/decorators";
-import { contentsMap } from "../lib/events-integration";
 import showModal from "discourse/lib/show-modal";
 import { notEmpty, readOnly } from "@ember/object/computed";
-
-const CLIENTS = ["events", "discourse_events"];
 
 function filtersMatch(filters1, filters2) {
   if ((filters1 && !filters2) || (!filters1 && filters2)) {
@@ -42,11 +39,6 @@ export default Component.extend({
   willDestroyElement() {
     this._super(...arguments);
     this.setMessage("info", "info");
-  },
-
-  @discourseComputed
-  clients() {
-    return contentsMap(CLIENTS);
   },
 
   @discourseComputed(

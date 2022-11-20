@@ -5,3 +5,6 @@ discourse_events_integration:
   update_events_automatically: false
   update_events_automatically_period_mins: 10
   split_event_series_into_different_topics: false
+  allow_moderator_event_management:
+    default: false
+    client: true

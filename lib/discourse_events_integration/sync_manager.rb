@@ -6,7 +6,7 @@ module DiscourseEventsIntegration
                 :client
 
     def initialize(user, client)
-      raise ArgumentError.new("Must pass a valid client") unless Connection::CLIENTS.include?(client.to_s)
+      raise ArgumentError.new("Must pass a valid client") unless Connection.client_names.include?(client.to_s)
 
       @user = user
       @client = client.to_s
@@ -58,7 +58,7 @@ module DiscourseEventsIntegration
         updated_topics: []
       }
 
-      Connection.to_sync.each do |connection|
+      Connection.all.each do |connection|
         result[:synced_connections] << connection.id
 
         syncer = self.new(connection.user, connection.client)

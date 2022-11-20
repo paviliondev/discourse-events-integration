@@ -4,7 +4,14 @@ module DiscourseEventsIntegration
   class Connection < ActiveRecord::Base
     self.table_name = 'discourse_events_integration_connections'
 
-    CLIENTS ||= %w(events_integration events discourse_events)
+    CLIENTS ||= {
+      events: "discourse-events",
+      discourse_events: "discourse-calendar"
+    }
+
+    def self.client_names
+      CLIENTS.keys.map(&:to_s)
+    end
 
     has_many :event_connections, foreign_key: 'connection_id', class_name: 'DiscourseEventsIntegration::EventConnection', dependent: :destroy
     has_many :events, through: :event_connections, source: :event
@@ -14,12 +21,18 @@ module DiscourseEventsIntegration
     belongs_to :category
     belongs_to :source, foreign_key: 'source_id', class_name: 'DiscourseEventsIntegration::Source'
 
-    validates :client, inclusion: { in: CLIENTS, message: "%{value} is not a valid connection client" }
+    validates :client, inclusion: { in: Connection.client_names, message: "%{value} is not a valid connection client" }
     validates :user, presence: true
     validates :category, presence: true
     validates :source, presence: true
 
-    scope :to_sync, -> { where("client <> 'events_integration'") }
+    def self.available_clients
+      CLIENTS.select { |client, plugin| plugins.include?(plugin) }.keys.map(&:to_s)
+    end
+
+    def self.plugins
+      Discourse.plugins.map(&:name)
+    end
   end
 end
 

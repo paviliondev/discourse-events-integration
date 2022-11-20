@@ -25,16 +25,10 @@ module DiscourseEventsIntegration
 
         data[:uid] = e.metadata.uid
         data[:status] = "published" unless data[:status].present?
-
-        if source
-          data[:source_id] = source.id
-          data[:provider_id] = source.provider.id
-        end
-
-        if e.metadata.series_id
-          data[:series_id] = e.metadata.series_id
-          data[:occurrence_id] = e.metadata.occurrence_id
-        end
+        data[:source_id] = source.id
+        data[:provider_id] = source.provider.id
+        data[:series_id] = e.metadata.series_id
+        data[:occurrence_id] = e.metadata.occurrence_id
 
         data
       end

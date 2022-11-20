@@ -72,6 +72,7 @@ module DiscourseEventsIntegration
         .permit(
           :name,
           :provider_type,
+          :url,
           :username,
           :password,
           :token,

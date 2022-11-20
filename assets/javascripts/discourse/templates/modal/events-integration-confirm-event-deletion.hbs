@@ -1,15 +1,11 @@
 <DModalBody @class="delete-event-modal" @title="admin.events_integration.event.delete.title">
-  <div class="text">
-    {{I18n "admin.events_integration.event.delete.confirm" count=eventCount}}
-  </div>
   <ul class="events">
     {{#each model.events as |event|}}
       <li class="event">{{event.name}}</li>
     {{/each}}
   </ul>
-  <div class="topics-control">
-    <Input @type="checkbox" class="destroy-topics" @checked={{destroyTopics}} />
-    {{I18n "admin.events_integration.event.delete.topics"}}
+  <div class="target-control">
+    <ComboBox @content={{deleteTargets}} @value={{deleteTarget}} @onChange={{action (mut deleteTarget)}} />
   </div>
 </DModalBody>
 

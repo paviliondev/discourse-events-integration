@@ -67,17 +67,16 @@
   }
 
   .credentials-column {
-    min-width: 330px;
+    min-width: 270px;
 
     .credentials-container {
       display: inline-flex;
-      width: 410px;
       gap: 0.5em;
     }
 
     .client-id,
     .client-secret {
-      width: 180px;
+      width: 110px;
     }
 
     .btn {
@@ -151,14 +150,20 @@
   .events-integration-provider-row {
     .name-column {
       max-width: 140px;
+      min-width: 140px;
 
       input {
         width: 100%;
       }
     }
 
+    .provider-type {
+      width: 150px;
+    }
+
     .status-column {
-      min-width: 90px;
+      min-width: 40px;
+      text-align: center;
     }
 
     .status {
@@ -219,9 +224,12 @@
 }
 
 .delete-event-modal {
-  .text,
-  .topics-control {
+  .target-control {
     margin-bottom: 0.5rem;
+
+    .select-kit {
+      width: 300px;
+    }
   }
 
   .events {
@@ -230,7 +238,13 @@
     padding: 1rem;
     background-color: var(--primary-low);
     max-height: 300px;
+    width: 500px;
+    max-width: 90vw;
     overflow: scroll;
+
+    li {
+      margin: 0.5rem;
+    }
   }
 }
 
@@ -314,5 +328,47 @@
         margin: 0;
       }
     }
+  }
+}
+
+.for-event {
+  border-radius: 1em;
+  display: inline-block;
+  border: 1px solid var(--primary-low);
+  background: var(--primary-very-low);
+
+  .topic-avatar,
+  .topic-body {
+    border: none;
+  }
+
+  .topic-avatar {
+    padding-left: 15px;
+  }
+
+  .topic-body {
+    margin-right: 12px;
+
+    .post-menu-area {
+      padding: 0;
+    }
+
+    nav.post-controls .actions {
+      margin-left: unset;
+      width: 100%;
+
+      .manage-event {
+        margin-right: auto;
+        color: var(--primary-medium);
+      }
+    }
+  }
+}
+
+nav.post-controls .actions .manage-event {
+  padding: 8px 10px;
+
+  .d-icon {
+    margin-right: var(--control-icon-space);
   }
 }

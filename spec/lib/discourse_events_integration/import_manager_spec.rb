@@ -20,7 +20,7 @@ describe DiscourseEventsIntegration::ImportManager do
     expect(events.map(&:uid)).to match_array(event_uids)
   end
 
-  it 'imports all active sources' do
+  it "imports all active sources" do
     source
     subject.import_all_sources
 
@@ -30,10 +30,10 @@ describe DiscourseEventsIntegration::ImportManager do
     expect(events.second.uid).to eq(event_uids.second)
   end
 
-  it 'logs imports' do
+  it "logs imports" do
     subject.import_source(source.id)
     expect(DiscourseEventsIntegration::Log.all.first.message).to eq(
-      I18n.t('log.import_finished',
+      I18n.t("log.import_finished",
         source_name: source.name,
         events_count: 2,
         created_count: 2,
